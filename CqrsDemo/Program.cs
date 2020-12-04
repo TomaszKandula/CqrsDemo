@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using Serilog;
+using Serilog.Events;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace CqrsDemo
 {
@@ -15,14 +13,49 @@ namespace CqrsDemo
 
         public static IHostBuilder CreateHostBuilder(string[] Args) =>
             Host.CreateDefaultBuilder(Args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(AWebBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    AWebBuilder.UseStartup<Startup>();
+                    AWebBuilder.UseSerilog();
                 });
 
-        public static void Main(string[] Args)
+        public static int Main(string[] Args)
         {
-            CreateHostBuilder(Args).Build().Run();
+
+            var LOgsPath = AppDomain.CurrentDomain.BaseDirectory + "\\logs";
+            if (!Directory.Exists(LOgsPath)) Directory.CreateDirectory(LOgsPath);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                .Enrich.FromLogContext()
+                .WriteTo.File
+                (
+                    LOgsPath + "\\log-.txt",
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    rollingInterval: RollingInterval.Day,
+                    rollOnFileSizeLimit: true,
+                    retainedFileCountLimit: null,
+                    shared: false
+                 )
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("Starting WebHost...");
+                CreateHostBuilder(Args).Build().Run();
+                return 0;
+            }
+            catch (Exception LException)
+            {
+                Log.Fatal(LException, "WebHost has been terminated unexpectedly.");
+                return 1;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+
         }
 
     }
