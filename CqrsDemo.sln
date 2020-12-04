@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsDemo", "CqrsDemo\CqrsDemo.csproj", "{A68C4866-FDC4-414D-BEC5-CAB3E42EF795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CqrsDemo", "CqrsDemo\CqrsDemo.csproj", "{A68C4866-FDC4-414D-BEC5-CAB3E42EF795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsDemo.UnitTests", "CqrsDemo.UnitTests\CqrsDemo.UnitTests.csproj", "{99CA985C-B9A4-4FAA-A5C8-8EC88529D202}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsDemo.IntegrationTests", "CqrsDemo.IntegrationTests\CqrsDemo.IntegrationTests.csproj", "{89D1456A-0731-43B2-96B6-E4AC3F69FCDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{A68C4866-FDC4-414D-BEC5-CAB3E42EF795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A68C4866-FDC4-414D-BEC5-CAB3E42EF795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A68C4866-FDC4-414D-BEC5-CAB3E42EF795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99CA985C-B9A4-4FAA-A5C8-8EC88529D202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99CA985C-B9A4-4FAA-A5C8-8EC88529D202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99CA985C-B9A4-4FAA-A5C8-8EC88529D202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99CA985C-B9A4-4FAA-A5C8-8EC88529D202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D1456A-0731-43B2-96B6-E4AC3F69FCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D1456A-0731-43B2-96B6-E4AC3F69FCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D1456A-0731-43B2-96B6-E4AC3F69FCDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D1456A-0731-43B2-96B6-E4AC3F69FCDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
