@@ -6,8 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.ResponseCompression;
+using CqrsDemo.Handlers;
 using CqrsDemo.Database;
 using CqrsDemo.AppLogger;
+using CqrsDemo.Services.CommandStore;
+using CqrsDemo.Services.Authentication;
 
 namespace CqrsDemo
 {
@@ -25,13 +28,15 @@ namespace CqrsDemo
         {
 
             AServices.AddControllers();
-            AServices.AddSingleton<IAppLogger, AppLogger.AppLogger>();
-
             AServices.AddDbContext<MainDbContext>(AOptions =>
             {
                 AOptions.UseSqlServer(Configuration.GetConnectionString("DbConnect"),
                 AAddOptions => AAddOptions.EnableRetryOnFailure());
             });
+            AServices.AddSingleton<IAppLogger, AppLogger.AppLogger>();
+            AServices.AddScoped<IAuthentication, Authentication>();
+            AServices.AddScoped<ICommandStore, CommandStore>();
+            AServices.AddScoped<IHandlerContext, HandlerContext>();
 
             AServices.AddResponseCompression(AOptions => { AOptions.Providers.Add<GzipCompressionProvider>(); });
 
