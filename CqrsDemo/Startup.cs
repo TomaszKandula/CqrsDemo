@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.ResponseCompression;
+using CqrsDemo.Database;
+using CqrsDemo.AppLogger;
 
 namespace CqrsDemo
 {
@@ -25,20 +23,43 @@ namespace CqrsDemo
 
         public void ConfigureServices(IServiceCollection AServices)
         {
+
             AServices.AddControllers();
+            AServices.AddSingleton<IAppLogger, AppLogger.AppLogger>();
+
+            AServices.AddDbContext<MainDbContext>(AOptions =>
+            {
+                AOptions.UseSqlServer(Configuration.GetConnectionString("DbConnect"),
+                AAddOptions => AAddOptions.EnableRetryOnFailure());
+            });
+
+            AServices.AddResponseCompression(AOptions => { AOptions.Providers.Add<GzipCompressionProvider>(); });
+
+            AServices.AddSwaggerGen(AOption =>
+            {
+                AOption.SwaggerDoc("v1", new OpenApiInfo { Title = "CqrsDemo Api", Version = "v1" });
+            });
+
         }
 
         public void Configure(IApplicationBuilder AApp, IWebHostEnvironment AEnv)
         {
 
+            AApp.UseResponseCompression();
+            
             if (AEnv.IsDevelopment())
             {
                 AApp.UseDeveloperExceptionPage();
             }
 
+            AApp.UseSwagger();
+            AApp.UseSwaggerUI(AOption =>
+            {
+                AOption.SwaggerEndpoint("/swagger/v1/swagger.json", "CqrsDemo Api version 1");
+            });
+            
             AApp.UseHttpsRedirection();
             AApp.UseRouting();
-            AApp.UseAuthorization();
             AApp.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
