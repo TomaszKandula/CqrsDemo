@@ -11,6 +11,10 @@ namespace CqrsDemo.Database
         {
         }
 
+        public MainDbContext() 
+        { 
+        }
+
         public DbSet<Parking> Parking { get; set; }
         public DbSet<ParkingPlace> ParkingPlaces { get; set; }
         public DbSet<Command> CommandStore { get; set; }
