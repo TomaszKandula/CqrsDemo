@@ -10,7 +10,7 @@ using CqrsDemo.Handlers.Commands.Models;
 namespace CqrsDemo.Handlers.Commands
 {
     
-    public class ParkingCommandHandler : IParkingCommandHandler
+    public class ParkingCommandHandler
     {
 
         private readonly MainDbContext FMainDbContext;

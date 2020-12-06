@@ -1,7 +1,10 @@
-﻿namespace CqrsDemo.Handlers.Queries.Models
+﻿using CqrsDemo.Models.Responses;
+using MediatR;
+
+namespace CqrsDemo.Handlers.Queries.Models
 {
 
-    public class GetRandomAvailablePlace
+    public class GetRandomAvailablePlace : IRequest<ParkingPlaceInfo>
     {
     }
 
