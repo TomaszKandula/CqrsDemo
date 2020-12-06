@@ -8,13 +8,13 @@ namespace CqrsDemo.UnitTests.Mock
     public static class DummyLoad
     {
 
-        public static List<Command> GetDummyCommands() 
+        public static List<CommandStore> GetDummyCommands() 
         {
 
-            return new List<Command>
+            return new List<CommandStore>
             {
 
-                new Command
+                new CommandStore
                 { 
                     Id = 1,
                     Type = "CreateParking",
@@ -22,7 +22,7 @@ namespace CqrsDemo.UnitTests.Mock
                     CreatedAt = DateTime.Parse("2020-12-04 20:28:03"),
                     UserId = "30fb43bf-9689-4a16-b41f-75775d11a02f"
                 },
-                new Command
+                new CommandStore
                 {
                     Id = 2,
                     Type = "CreateParking",
@@ -44,46 +44,12 @@ namespace CqrsDemo.UnitTests.Mock
                 new Parking
                 { 
                     Name = "Poznan Plaza",
-                    IsOpened = true,
-                    Places = new List<ParkingPlace>
-                    {
-                        new ParkingPlace
-                        {
-                            ParkingName = "Poznan Plaza",
-                            Number = 1,
-                            IsFree = true,
-                            UserId = null
-                        },
-                        new ParkingPlace
-                        {
-                            ParkingName = "Poznan Plaza",
-                            Number = 2,
-                            IsFree = true,
-                            UserId = null
-                        },
-                    }
+                    IsOpened = true
                 },
                 new Parking
                 {
                     Name = "Parking-786359",
                     IsOpened = true,
-                    Places = new List<ParkingPlace>
-                    {
-                        new ParkingPlace
-                        {
-                            ParkingName = "Parking-786359",
-                            Number = 3,
-                            IsFree = true,
-                            UserId = null
-                        },
-                        new ParkingPlace
-                        {
-                            ParkingName = "Parking-786359",
-                            Number = 4,
-                            IsFree = true,
-                            UserId = null
-                        }
-                    }
                 }
 
             };
@@ -101,28 +67,48 @@ namespace CqrsDemo.UnitTests.Mock
                     ParkingName = "Poznan Plaza",
                     Number = 1,
                     IsFree = true,
-                    UserId = null
+                    UserId = null,
+                    ParkingNameNavigation = new Parking
+                    {
+                        Name = "Poznan Plaza",
+                        IsOpened = true
+                    }
                 },
                 new ParkingPlace
                 {
                     ParkingName = "Poznan Plaza",
                     Number = 2,
                     IsFree = true,
-                    UserId = null
+                    UserId = null,
+                    ParkingNameNavigation = new Parking
+                    {
+                        Name = "Poznan Plaza",
+                        IsOpened = true
+                    }
                 },
                 new ParkingPlace
                 {
                     ParkingName = "Parking-786359",
                     Number = 3,
                     IsFree = true,
-                    UserId = null
+                    UserId = null,
+                    ParkingNameNavigation = new Parking
+                    {
+                        Name = "Parking-786359",
+                        IsOpened = true
+                    }
                 },
                 new ParkingPlace
                 {
                     ParkingName = "Parking-786359",
                     Number = 4,
                     IsFree = true,
-                    UserId = null
+                    UserId = null,
+                    ParkingNameNavigation = new Parking
+                    {
+                        Name = "Parking-786359",
+                        IsOpened = true
+                    }
                 }
 
             };

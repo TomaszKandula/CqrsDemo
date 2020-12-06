@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Database;
-using CqrsDemo.Database.Models;
 using CqrsDemo.Models.Responses;
 using CqrsDemo.Handlers.Queries.Models;
 
@@ -24,8 +23,8 @@ namespace CqrsDemo.Handlers.Queries
         public async Task<IEnumerable<ParkingInfo>> Handle(GetAllParkingInfo _)
         {
 
-            var LParkings = await FMainDbContext.Set<Parking>()
-                .Include(AParking => AParking.Places)
+            var LParkings = await FMainDbContext.Parking
+                .Include(AParking => AParking.ParkingPlaces)
                 .ToListAsync();
 
             return LParkings.Select(AParking =>
@@ -35,8 +34,8 @@ namespace CqrsDemo.Handlers.Queries
                 {
                     Name = AParking.Name,
                     IsOpened = AParking.IsOpened,
-                    MaximumPlaces = AParking.Places.Count,
-                    AvailablePlaces = AParking.IsOpened ? AParking.Places
+                    MaximumPlaces = AParking.ParkingPlaces.Count,
+                    AvailablePlaces = AParking.IsOpened ? AParking.ParkingPlaces
                         .Where(AParkingPlace => AParkingPlace.IsFree)
                         .Count() : 0
                 };
@@ -48,8 +47,8 @@ namespace CqrsDemo.Handlers.Queries
         public ParkingInfo Handle(GetParkingInfo AQuery)
         {
 
-            var LParking = FMainDbContext.Set<Parking>()
-                .Include(AParking => AParking.Places)
+            var LParking = FMainDbContext.Parking
+                .Include(AParking => AParking.ParkingPlaces)
                 .FirstOrDefault(p => p.Name == AQuery.ParkingName);
 
             if (LParking == null)
@@ -59,9 +58,9 @@ namespace CqrsDemo.Handlers.Queries
             {
                 Name = LParking.Name,
                 IsOpened = LParking.IsOpened,
-                MaximumPlaces = LParking.Places.Count,
+                MaximumPlaces = LParking.ParkingPlaces.Count,
                 AvailablePlaces =
-                    LParking.IsOpened ? LParking.Places
+                    LParking.IsOpened ? LParking.ParkingPlaces
                         .Where(AParkingPlace => AParkingPlace.IsFree)
                         .Count() : 0
             };
@@ -72,9 +71,9 @@ namespace CqrsDemo.Handlers.Queries
 
             var LRandom = new Random();
 
-            var LParkingPlace = FMainDbContext.Set<ParkingPlace>()
-                .Include(AParkingPlace => AParkingPlace.Parking)
-                .Where(AParkingPlace => AParkingPlace.Parking.IsOpened && AParkingPlace.IsFree)
+            var LParkingPlace = FMainDbContext.ParkingPlaces
+                .Include(AParkingPlace => AParkingPlace.ParkingNameNavigation.ParkingPlaces)
+                .Where(AParkingPlace => AParkingPlace.ParkingNameNavigation.IsOpened && AParkingPlace.IsFree)
                 .OrderBy(AParkingPlace => LRandom.Next())
                 .FirstOrDefault();
 
@@ -87,8 +86,8 @@ namespace CqrsDemo.Handlers.Queries
 
         public int Handle(GetTotalAvailablePlaces _)
         {
-            return FMainDbContext.Set<ParkingPlace>()
-                .Where(AParkingPlace => AParkingPlace.Parking.IsOpened && AParkingPlace.IsFree)
+            return FMainDbContext.ParkingPlaces
+                .Where(AParkingPlace => AParkingPlace.ParkingNameNavigation.IsOpened && AParkingPlace.IsFree)
                 .Count();
         }
 

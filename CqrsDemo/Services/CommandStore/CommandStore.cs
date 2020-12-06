@@ -23,8 +23,8 @@ namespace CqrsDemo.Services.CommandStore
         public async Task Push(object ACommand)
         {
 
-            FMainDbContext.Set<Command>().Add(
-                new Command
+            FMainDbContext.Set<Database.Models.CommandStore>().Add(
+                new Database.Models.CommandStore
                 {
                     Type      = ACommand.GetType().Name,
                     Data      = JsonConvert.SerializeObject(ACommand),

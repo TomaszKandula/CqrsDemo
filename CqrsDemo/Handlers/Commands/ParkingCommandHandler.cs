@@ -27,7 +27,7 @@ namespace CqrsDemo.Handlers.Commands
         public async Task Handle(CloseParking ACommand)
         {
 
-            var LParking = FMainDbContext.Set<Parking>()
+            var LParking = FMainDbContext.Parking
                 .FirstOrDefault(p => p.Name == ACommand.ParkingName);
 
             if (LParking == null)
@@ -62,7 +62,7 @@ namespace CqrsDemo.Handlers.Commands
             {
                 Name = ACommand.ParkingName,
                 IsOpened = true,
-                Places = LPlaces
+                ParkingPlaces = LPlaces
             };
 
             FMainDbContext.Add(LParking);
@@ -75,7 +75,7 @@ namespace CqrsDemo.Handlers.Commands
         public async Task Handle(LeaveParking ACommand)
         {
 
-            var LParking = FMainDbContext.Set<Parking>()
+            var LParking = FMainDbContext.Parking
                 .FirstOrDefault(p => p.Name == ACommand.ParkingName);
 
             if (LParking == null)
@@ -84,7 +84,7 @@ namespace CqrsDemo.Handlers.Commands
             if (!LParking.IsOpened)
                 throw new Exception($"The parking '{ACommand.ParkingName}' is closed.");
 
-            var parkingPlace = FMainDbContext.Set<ParkingPlace>()
+            var parkingPlace = FMainDbContext.ParkingPlaces
                 .FirstOrDefault(p => p.ParkingName == ACommand.ParkingName && p.Number == ACommand.PlaceNumber);
 
             if (parkingPlace == null)
@@ -104,7 +104,7 @@ namespace CqrsDemo.Handlers.Commands
         public async Task Handle(OpenParking ACommand)
         {
             
-            var LParking = FMainDbContext.Set<Parking>()
+            var LParking = FMainDbContext.Parking
                 .FirstOrDefault(p => p.Name == ACommand.ParkingName);
 
             if (LParking == null)
@@ -123,7 +123,7 @@ namespace CqrsDemo.Handlers.Commands
         public async Task Handle(TakeParkingPlace ACommand)
         {
 
-            var LParking = FMainDbContext.Set<Parking>()
+            var LParking = FMainDbContext.Parking
                 .FirstOrDefault(p => p.Name == ACommand.ParkingName);
 
             if (LParking == null)
@@ -135,7 +135,7 @@ namespace CqrsDemo.Handlers.Commands
                 throw new Exception($"The parking '{ACommand.ParkingName}' is closed.");
             }
 
-            var LParkingPlace = FMainDbContext.Set<ParkingPlace>()
+            var LParkingPlace = FMainDbContext.ParkingPlaces
                 .FirstOrDefault(p => p.ParkingName == ACommand.ParkingName && p.Number == ACommand.PlaceNumber);
 
             if (LParkingPlace == null)
