@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using CqrsDemo.Models.Requests;
 using CqrsDemo.Handlers.Queries.Models;
-using AutoMapper;
+using CqrsDemo.Handlers.Commands.Models;
 using MediatR;
 
 namespace CqrsDemo.Controllers
@@ -13,13 +14,11 @@ namespace CqrsDemo.Controllers
     public class ParkingController : ControllerBase
     {
 
-        private readonly IMapper FMapper;
         private readonly IMediator FMediator;
 
-        public ParkingController(IMediator AMediator, IMapper AMapper) 
+        public ParkingController(IMediator AMediator) 
         {
             FMediator = AMediator;
-            FMapper = AMapper;
         }
 
         [HttpGet]
@@ -89,73 +88,103 @@ namespace CqrsDemo.Controllers
 
         }
 
-        //[HttpPost]
-        //public async Task CreateParking([FromBody] CreateParkingRequest PayLoad)
-        //{
+        [HttpPost]
+        public async Task<IActionResult> CreateParking([FromBody] CreateParkingRequest PayLoad)
+        {
 
-        //    //var LCommand = new CreateParking
-        //    //{
-        //    //    ParkingName = PayLoad.ParkingName,
-        //    //    Capacity = PayLoad.Capacity
-        //    //};
+            try 
+            {
+                var LCommand = await FMediator.Send(new CreateParking 
+                { 
+                    ParkingName = PayLoad.ParkingName,
+                    Capacity = PayLoad.Capacity
+                });
+                return StatusCode(200, LCommand);
+            }
+            catch (Exception LException)
+            {
+                return StatusCode(400, LException.Message);
+            }
 
-        //    //await FHandlerContext.CommandHandlers.Handle(LCommand);
+        }
 
-        //}
+        [HttpPost("{ParkingName}/Open")]
+        public async Task<IActionResult> OpenParking([FromRoute] string ParkingName)
+        {
 
-        //[HttpPost("{ParkingName}/Open")]
-        //public async Task OpenParking([FromRoute] string ParkingName)
-        //{
+            try
+            {
+                var LCommand = await FMediator.Send(new OpenParking
+                {
+                    ParkingName = ParkingName
+                });
+                return StatusCode(200, LCommand);
+            }
+            catch (Exception LException)
+            {
+                return StatusCode(400, LException.Message);
+            }
 
-        //    //var LCommand = new OpenParking 
-        //    //{ 
-        //    //    ParkingName = ParkingName 
-        //    //};
+        }
 
-        //    //await FHandlerContext.CommandHandlers.Handle(LCommand);
+        [HttpPost("{ParkingName}/Close")]
+        public async Task<IActionResult> CloseParking([FromRoute] string ParkingName)
+        {
 
-        //}
+            try
+            {
+                var LCommand = await FMediator.Send(new CloseParking
+                {
+                    ParkingName = ParkingName
+                });
+                return StatusCode(200, LCommand);
+            }
+            catch (Exception LException)
+            {
+                return StatusCode(400, LException.Message);
+            }
 
-        //[HttpPost("{ParkingName}/Close")]
-        //public async Task CloseParking([FromRoute] string ParkingName)
-        //{
+        }
 
-        //    //var LCommand = new CloseParking 
-        //    //{ 
-        //    //    ParkingName = ParkingName 
-        //    //};
+        [HttpPost("{ParkingName}/{PlaceNumber}/Take")]
+        public async Task<IActionResult> TakeParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
+        {
 
-        //    //await FHandlerContext.CommandHandlers.Handle(LCommand);
+            try
+            {
+                var LCommand = await FMediator.Send(new TakeParkingPlace
+                {
+                    ParkingName = ParkingName,
+                    PlaceNumber = PlaceNumber
+                });
+                return StatusCode(200, LCommand);
+            }
+            catch (Exception LException)
+            {
+                return StatusCode(400, LException.Message);
+            }
 
-        //}
+        }
 
-        //[HttpPost("{ParkingName}/{PlaceNumber}/Take")]
-        //public async Task TakeParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
-        //{
+        [HttpPost("{ParkingName}/{PlaceNumber}/Leave")]
+        public async Task<IActionResult> LeaveParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
+        {
 
-        //    //var LCommand = new TakeParkingPlace
-        //    //{
-        //    //    ParkingName = ParkingName,
-        //    //    PlaceNumber = PlaceNumber
-        //    //};
+            try
+            {
+                var LCommand = await FMediator.Send(new LeaveParkingPlace
+                {
+                    ParkingName = ParkingName,
+                    PlaceNumber = PlaceNumber
+                });
+                return StatusCode(200, LCommand);
+            }
+            catch (Exception LException)
+            {
+                return StatusCode(400, LException.Message);
+            }
 
-        //    //await FHandlerContext.CommandHandlers.Handle(LCommand);
-
-        //}
-
-        //[HttpPost("{ParkingName}/{PlaceNumber}/Leave")]
-        //public async Task LeaveParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
-        //{
-
-        //    //var LCommand = new LeaveParking
-        //    //{
-        //    //    ParkingName = ParkingName,
-        //    //    PlaceNumber = PlaceNumber
-        //    //};
-
-        //    //await FHandlerContext.CommandHandlers.Handle(LCommand);
-
-        //}
+        }
 
     }
 
