@@ -44,7 +44,7 @@ namespace CqrsDemo.UnitTests.Mock
                 new Parking
                 { 
                     Name = "Poznan Plaza",
-                    IsOpened = true
+                    IsOpened = false
                 },
                 new Parking
                 {
@@ -102,7 +102,7 @@ namespace CqrsDemo.UnitTests.Mock
                 {
                     ParkingName = "Parking-786359",
                     Number = 4,
-                    IsFree = true,
+                    IsFree = false,
                     UserId = null,
                     ParkingNameNavigation = new Parking
                     {

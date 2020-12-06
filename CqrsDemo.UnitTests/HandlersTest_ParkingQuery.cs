@@ -24,12 +24,10 @@ namespace CqrsDemo.UnitTests
             var LMockDbContext = new Mock<MainDbContext>();
 
             // Upload pre-fixed dummy data
-            var LCommandDbSet = DummyLoad.GetDummyCommands().AsQueryable().BuildMockDbSet();
             var LParkingDbSet = DummyLoad.GetDummyParkings().AsQueryable().BuildMockDbSet();
             var LParkingPlaceDbSet = DummyLoad.GetDummyParkingPlaces().AsQueryable().BuildMockDbSet();
 
             // Populate database tables with dummy data
-            LMockDbContext.Setup(AMainDbContext => AMainDbContext.CommandStore).Returns(LCommandDbSet.Object);
             LMockDbContext.Setup(AMainDbContext => AMainDbContext.Parking).Returns(LParkingDbSet.Object);
             LMockDbContext.Setup(AMainDbContext => AMainDbContext.ParkingPlaces).Returns(LParkingPlaceDbSet.Object);
 
