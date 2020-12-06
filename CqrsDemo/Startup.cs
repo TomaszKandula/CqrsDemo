@@ -18,7 +18,6 @@ using CqrsDemo.Services.Authentication;
 using CqrsDemo.Handlers.Queries.Models;
 using CqrsDemo.Handlers.Commands.Models;
 using MediatR;
-using AutoMapper;
 
 namespace CqrsDemo
 {
@@ -37,7 +36,6 @@ namespace CqrsDemo
 
             AServices.AddControllers();
             AServices.AddMediatR(Assembly.GetExecutingAssembly());
-            AServices.AddAutoMapper(typeof(Startup));
             
             AServices.AddDbContext<MainDbContext>(AOptions =>
             {
