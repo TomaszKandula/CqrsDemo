@@ -3,7 +3,7 @@
 namespace CqrsDemo.Database.Models
 {
 
-    public class Command
+    public class CommandStore
     {
         public long Id { get; set; }
         public string Type { get; set; }
