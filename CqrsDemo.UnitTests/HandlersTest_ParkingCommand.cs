@@ -127,7 +127,7 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
-            var LCommand = new LeaveParking
+            var LCommand = new LeaveParkingPlace
             {
                 ParkingName = ParkingName,
                 PlaceNumber = PlaceNumber

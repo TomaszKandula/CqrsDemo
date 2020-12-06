@@ -4,10 +4,10 @@ using MediatR;
 namespace CqrsDemo.Handlers.Commands.Models
 {
 
-    public class CreateParking : IRequest<CommandResponse>
+    public class LeaveParkingPlace : IRequest<CommandResponse>
     {
         public string ParkingName { get; set; }
-        public int Capacity { get; set; }
+        public int PlaceNumber { get; set; }
     }
 
 }

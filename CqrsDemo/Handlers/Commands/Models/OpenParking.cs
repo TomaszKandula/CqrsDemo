@@ -1,7 +1,10 @@
-﻿namespace CqrsDemo.Handlers.Commands.Models
+﻿using CqrsDemo.Models.Responses;
+using MediatR;
+
+namespace CqrsDemo.Handlers.Commands.Models
 {
 
-    public class OpenParking
+    public class OpenParking : IRequest<CommandResponse>
     {
         public string ParkingName { get; set; }
     }

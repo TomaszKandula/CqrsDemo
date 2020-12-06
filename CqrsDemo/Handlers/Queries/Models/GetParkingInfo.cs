@@ -1,7 +1,10 @@
-﻿namespace CqrsDemo.Handlers.Queries.Models
+﻿using CqrsDemo.Models.Responses;
+using MediatR;
+
+namespace CqrsDemo.Handlers.Queries.Models
 {
 
-    public class GetParkingInfo
+    public class GetParkingInfo : IRequest<ParkingInfo>
     {
         public string ParkingName { get; set; }
     }
