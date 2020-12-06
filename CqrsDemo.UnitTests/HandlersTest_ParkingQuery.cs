@@ -58,10 +58,16 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
+            var LQuery = new GetParkingInfo
+            {
+                ParkingName = "Parking-786359"
+            };
 
             // Act
+            var LResult = FParkingQueryHandler.Handle(LQuery);
 
             // Assert
+            LResult.IsOpened.Should().BeTrue();
 
         }
 
@@ -70,10 +76,14 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
+            var LQuery = new GetRandomAvailablePlace();
 
             // Act
+            var LResult = FParkingQueryHandler.Handle(LQuery);
 
             // Assert
+            LResult.Number.Should().NotBe(0);
+            LResult.ParkingName.Should().NotBeNullOrEmpty();
 
         }
 
@@ -82,10 +92,13 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
+            var LQuery = new GetTotalAvailablePlaces();
 
             // Act
+            var LResult = FParkingQueryHandler.Handle(LQuery);
 
             // Assert
+            LResult.Should().Be(4);
 
         }
 
