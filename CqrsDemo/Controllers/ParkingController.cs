@@ -30,7 +30,7 @@ namespace CqrsDemo.Controllers
         }
 
         [HttpGet("{ParkingName}")]
-        public ParkingInfo GetParkingInfo(string ParkingName)
+        public ParkingInfo GetParkingInfo([FromRoute] string ParkingName)
         {
 
             var LQuery = new GetParkingInfo
@@ -71,7 +71,7 @@ namespace CqrsDemo.Controllers
         }
 
         [HttpPost("{ParkingName}/Open")]
-        public async Task OpenParking(string ParkingName)
+        public async Task OpenParking([FromRoute] string ParkingName)
         {
 
             var LCommand = new OpenParking 
@@ -84,7 +84,7 @@ namespace CqrsDemo.Controllers
         }
 
         [HttpPost("{ParkingName}/Close")]
-        public async Task CloseParking(string ParkingName)
+        public async Task CloseParking([FromRoute] string ParkingName)
         {
 
             var LCommand = new CloseParking 
@@ -97,7 +97,7 @@ namespace CqrsDemo.Controllers
         }
 
         [HttpPost("{ParkingName}/{PlaceNumber}/Take")]
-        public async Task TakeParkingPlace(string ParkingName, int PlaceNumber)
+        public async Task TakeParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
         {
 
             var LCommand = new TakeParkingPlace
@@ -111,7 +111,7 @@ namespace CqrsDemo.Controllers
         }
 
         [HttpPost("{ParkingName}/{PlaceNumber}/Leave")]
-        public async Task LeaveParkingPlace(string ParkingName, int PlaceNumber)
+        public async Task LeaveParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
         {
 
             var LCommand = new LeaveParking
