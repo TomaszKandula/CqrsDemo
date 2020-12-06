@@ -96,7 +96,7 @@ namespace CqrsDemo.UnitTests
             var LResult = FParkingQueryHandler.Handle(LQuery);
 
             // Assert
-            LResult.Should().Be(4);
+            LResult.Should().Be(3);
 
         }
 
