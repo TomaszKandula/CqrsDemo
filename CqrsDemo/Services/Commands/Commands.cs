@@ -5,16 +5,16 @@ using CqrsDemo.Database;
 using CqrsDemo.Database.Models;
 using CqrsDemo.Services.Authentication;
 
-namespace CqrsDemo.Services.CommandStore
+namespace CqrsDemo.Services.Commands
 {
 
-    public class CommandStore : ICommandStore
+    public class Commands : ICommands
     {
 
         private readonly MainDbContext FMainDbContext;
         private readonly IAuthentication FAuthentication;
 
-        public CommandStore(IAuthentication AAuthentication, MainDbContext AMainDbContext) 
+        public Commands(IAuthentication AAuthentication, MainDbContext AMainDbContext) 
         {
             FMainDbContext = AMainDbContext;
             FAuthentication = AAuthentication;
@@ -23,8 +23,8 @@ namespace CqrsDemo.Services.CommandStore
         public async Task Push(object ACommand)
         {
 
-            FMainDbContext.Set<Database.Models.CommandStore>().Add(
-                new Database.Models.CommandStore
+            FMainDbContext.CommandStore.Add(
+                new CommandStore
                 {
                     Type      = ACommand.GetType().Name,
                     Data      = JsonConvert.SerializeObject(ACommand),

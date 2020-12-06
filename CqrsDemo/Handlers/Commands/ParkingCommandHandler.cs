@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CqrsDemo.Database.Models;
 using CqrsDemo.Database;
-using CqrsDemo.Services.CommandStore;
+using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
 using CqrsDemo.Handlers.Commands.Models;
 
@@ -14,10 +14,10 @@ namespace CqrsDemo.Handlers.Commands
     {
 
         private readonly MainDbContext FMainDbContext;
-        private readonly ICommandStore FCommandStore;
+        private readonly ICommands FCommandStore;
         private readonly IAuthentication FAuthentication;
 
-        public ParkingCommandHandler(MainDbContext AMainDbContext, ICommandStore ACommandStore, IAuthentication AAuthentication) 
+        public ParkingCommandHandler(MainDbContext AMainDbContext, ICommands ACommandStore, IAuthentication AAuthentication) 
         {
             FMainDbContext = AMainDbContext;
             FCommandStore = ACommandStore;

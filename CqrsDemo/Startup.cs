@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using CqrsDemo.Handlers;
 using CqrsDemo.Database;
 using CqrsDemo.AppLogger;
-using CqrsDemo.Services.CommandStore;
+using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
 
 namespace CqrsDemo
@@ -35,7 +35,7 @@ namespace CqrsDemo
             });
             AServices.AddSingleton<IAppLogger, AppLogger.AppLogger>();
             AServices.AddScoped<IAuthentication, Authentication>();
-            AServices.AddScoped<ICommandStore, CommandStore>();
+            AServices.AddScoped<ICommands, Commands>();
             AServices.AddScoped<IHandlerContext, HandlerContext>();
 
             AServices.AddResponseCompression(AOptions => { AOptions.Providers.Add<GzipCompressionProvider>(); });
