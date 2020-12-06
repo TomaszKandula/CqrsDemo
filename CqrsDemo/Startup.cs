@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using CqrsDemo.Database;
 using CqrsDemo.AppLogger;
 using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
+using MediatR;
 
 namespace CqrsDemo
 {
@@ -28,6 +30,7 @@ namespace CqrsDemo
         {
 
             AServices.AddControllers();
+            AServices.AddMediatR(Assembly.GetExecutingAssembly());
             AServices.AddDbContext<MainDbContext>(AOptions =>
             {
                 AOptions.UseSqlServer(Configuration.GetConnectionString("DbConnect"),
