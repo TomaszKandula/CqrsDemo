@@ -27,14 +27,24 @@ namespace CqrsDemo.Handlers.Commands
         {
 
             var LParking = (await FMainDbContext.Parking
-                .ToListAsync()
-                ).FirstOrDefault(p => p.Name == Request.ParkingName);
+                .ToListAsync())
+                .FirstOrDefault(p => p.Name == Request.ParkingName);
 
-            //if (LParking == null)
-            //    throw new Exception($"Cannot find parking '{Request.ParkingName}'.");
+            if (LParking == null)
+                return new CommandResponse 
+                { 
+                    IsSucceeded = false,
+                    ErrorCode = "no_such_parking",
+                    ErrorDesc = $"Cannot find parking '{Request.ParkingName}'."
+                };
 
-            //if (LParking.IsOpened)
-            //    throw new Exception($"Parking '{Request.ParkingName}' is already opened.");
+            if (LParking.IsOpened)
+                return new CommandResponse 
+                { 
+                    IsSucceeded = false,
+                    ErrorCode = "parking_open",
+                    ErrorDesc = $"Parking '{Request.ParkingName}' is already opened."
+                };
 
             LParking.IsOpened = true;
 

@@ -13,8 +13,10 @@ using CqrsDemo.AppLogger;
 using CqrsDemo.Models.Responses;
 using CqrsDemo.Handlers.Queries;
 using CqrsDemo.Services.Commands;
+using CqrsDemo.Handlers.Commands;
 using CqrsDemo.Services.Authentication;
 using CqrsDemo.Handlers.Queries.Models;
+using CqrsDemo.Handlers.Commands.Models;
 using MediatR;
 using AutoMapper;
 
@@ -52,7 +54,11 @@ namespace CqrsDemo
             AServices.AddTransient<IRequestHandler<GetRandomAvailablePlace, ParkingPlaceInfo>, HandleRandomAvailablePlace>();
             AServices.AddTransient<IRequestHandler<GetTotalAvailablePlaces, AvailablePlaceInfo>, HandleTotalAvailablePlaces>();
 
-
+            AServices.AddTransient<IRequestHandler<CloseParking, CommandResponse>, HandleCloseParking>();
+            AServices.AddTransient<IRequestHandler<CreateParking, CommandResponse>, HandleCreateParking>();
+            AServices.AddTransient<IRequestHandler<LeaveParkingPlace, CommandResponse>, HandleLeaveParkingPlace>();
+            AServices.AddTransient<IRequestHandler<OpenParking, CommandResponse>, HandleOpenParking>();
+            AServices.AddTransient<IRequestHandler<TakeParkingPlace, CommandResponse>, HandleTakeParkingPlace>();
 
             AServices.AddResponseCompression(AOptions => { AOptions.Providers.Add<GzipCompressionProvider>(); });
 

@@ -6,5 +6,9 @@ namespace CqrsDemo.Models.Responses
     {
         [JsonPropertyName("isSucceeded")]
         public bool IsSucceeded { get; set; }
+        [JsonPropertyName("errorCode")]
+        public string ErrorCode { get; set; } = "no_errors";
+        [JsonPropertyName("errorDesc")]
+        public string ErrorDesc { get; set; } = "n/a";
     }
 }
