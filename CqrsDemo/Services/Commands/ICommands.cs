@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-namespace CqrsDemo.Services.CommandStore
+namespace CqrsDemo.Services.Commands
 {
 
-    public interface ICommandStore
+    public interface ICommands
     {
         Task Push(object Command);
     }

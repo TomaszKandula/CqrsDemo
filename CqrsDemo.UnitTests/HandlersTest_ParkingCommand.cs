@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using CqrsDemo.Database;
 using CqrsDemo.UnitTests.Mock;
 using CqrsDemo.Handlers.Commands;
-using CqrsDemo.Services.CommandStore;
+using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
 using CqrsDemo.Handlers.Commands.Models;
 
@@ -39,7 +39,7 @@ namespace CqrsDemo.UnitTests
             // Create test instance with all dependencies
             // Note: we do not fake IAuthentication because it only returns GUID for demo purposes
             var LAuthentication = new Authentication();
-            var LCommandStore = new CommandStore(LAuthentication, LMockDbContext.Object);
+            var LCommandStore = new Commands(LAuthentication, LMockDbContext.Object);
             FParkingCommandHandler = new ParkingCommandHandler(LMockDbContext.Object, LCommandStore, LAuthentication);
 
         }

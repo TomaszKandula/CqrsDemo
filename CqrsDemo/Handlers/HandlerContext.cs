@@ -1,7 +1,7 @@
 ﻿using CqrsDemo.Database;
 using CqrsDemo.Handlers.Queries;
 using CqrsDemo.Handlers.Commands;
-using CqrsDemo.Services.CommandStore;
+using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
 
 namespace CqrsDemo.Handlers
@@ -11,13 +11,13 @@ namespace CqrsDemo.Handlers
     {
 
         private readonly MainDbContext FMainDbContext;
-        private readonly ICommandStore FCommandStore;
+        private readonly ICommands FCommandStore;
         private readonly IAuthentication FAuthentication;
 
         private ParkingQueryHandler FParkingQueryHandler;
         private ParkingCommandHandler FParkingCommandHandler;
 
-        public HandlerContext(MainDbContext AMainDbContext, ICommandStore ACommandStore, IAuthentication AAuthentication) 
+        public HandlerContext(MainDbContext AMainDbContext, ICommands ACommandStore, IAuthentication AAuthentication) 
         {
             FMainDbContext = AMainDbContext;
             FCommandStore = ACommandStore;
