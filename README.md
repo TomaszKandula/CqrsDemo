@@ -13,9 +13,11 @@ CQRS stands for _Command and Query Responsibility Segregation_. Following Martin
 
 It is most suitable for large complex systems.
 
-This repositorium holds basic .NET Core application (back-end only) that complies to the below diagram (without SPA). Please note that it does not have event sourcing, but it uses mediator pattern.
+This repositorium holds basic .NET Core application (back-end only) that complies to the below diagram (without SPA). Please note that it does not have event sourcing, but it uses [mediator pattern](https://refactoring.guru/design-patterns/mediator).
 
 ![cqrs](https://maindbstorage.blob.core.windows.net/tokanpages/content/drawings/cqrs_c4_model.png)
+
+This example of Parking System was initially inspired by article written by David Bottiau on CQRS ([see here](https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54)). However, unlike David example, this example suppose to be a bit more robust, it uses __MediatR__ library and the unit tests and integration tests are provided, also, the application is meant to be _clone, test and run_, once connection string to database is supplied.
 
 ## Tech-stack (back-end)
 
@@ -58,9 +60,9 @@ Covers all the logic used in the controllers (please note that the endpoints doe
 
 ## REST API
 
-In this example all controllers are public.
+In this example all controllers are public following `async/await` pattern.
 
-__Swagger-UI__ is added for easy API discover: `/swagger`. Swagger JSON is also available: `/swagger/v1/swagger.json`.
+__Swagger-UI__ is added for easy API discovery: `/swagger`. Swagger JSON is also available: `/swagger/v1/swagger.json`.
 
 ## CQRS - MediatR, handlers
 
@@ -206,7 +208,7 @@ public class CommandResponse
 }
 ```
 
-### Command Sourcing
+## Command Sourcing
 
 This example does not provide event sourcing, but have example of command sourcing using SQL database, thus each command execution is stored in separate table (`CommandStore`). Therefore, it acts as a logging system for commands that can be retrieved and examined if necessary, however, in real world application this may be implemented with logger of choice (SeriLog + Sentry etc.).
 
@@ -227,4 +229,3 @@ public virtual async Task Push(object ACommand)
     await FMainDbContext.SaveChangesAsync();
 }
 ```
-
