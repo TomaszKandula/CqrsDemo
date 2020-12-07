@@ -20,7 +20,7 @@ namespace CqrsDemo.Services.Commands
             FAuthentication = AAuthentication;
         }
 
-        public async Task Push(object ACommand)
+        public virtual async Task Push(object ACommand)
         {
 
             FMainDbContext.CommandStore.Add(
