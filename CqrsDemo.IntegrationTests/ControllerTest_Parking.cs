@@ -12,7 +12,7 @@ using CqrsDemo.IntegrationTests.Configuration;
 namespace CqrsDemo.IntegrationTests
 {
 
-    public class ControllerTest_Parking : IClassFixture<TestFixture<Startup>> // refactor!
+    public class ControllerTest_Parking : IClassFixture<TestFixture<Startup>>
     {
 
         private readonly HttpClient FHttpClient;
@@ -180,7 +180,7 @@ namespace CqrsDemo.IntegrationTests
 
         [Theory]
         [InlineData("Poznan Plaza", 1)]
-        public async Task Should_TakeParkingPlace(string ParkingName, int PlaceNumber) 
+        public async Task Should_FailToTakeParkingPlace(string ParkingName, int PlaceNumber) 
         {
 
             // Arrange
@@ -196,7 +196,7 @@ namespace CqrsDemo.IntegrationTests
             LContent.Should().NotBeNull();
 
             var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
-            LDeserialized.IsSucceeded.Should().BeTrue();
+            LDeserialized.IsSucceeded.Should().BeFalse();
 
         }
 
