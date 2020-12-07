@@ -32,7 +32,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -51,7 +51,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -67,7 +67,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -83,7 +83,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -103,7 +103,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -122,7 +122,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -141,7 +141,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -161,7 +161,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
@@ -181,7 +181,7 @@ namespace CqrsDemo.Controllers
             }
             catch (Exception LException)
             {
-                return StatusCode(400, LException.Message);
+                return StatusCode(500, LException.Message);
             }
 
         }
