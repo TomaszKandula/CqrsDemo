@@ -17,7 +17,7 @@ This repositorium holds basic .NET Core application (back-end only) that complie
 
 ![cqrs](https://maindbstorage.blob.core.windows.net/tokanpages/content/drawings/cqrs_c4_model.png)
 
-This example of Parking System was initially inspired by article written by David Bottiau on CQRS ([see here](https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54)). However, unlike David example, this example suppose to be a bit more robust, it uses __MediatR__ library and the unit tests and integration tests are provided, also, the application is meant to be _clone, test and run_, once connection string to database is supplied.
+This example of Parking System was initially inspired by article written by David Bottiau on CQRS ([see here](https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54)). However, unlike David example, this example suppose to be a bit more robust, it uses __MediatR__ library and the unit tests and integration tests are provided, also, the application is meant to be _clone, test and run_, once the connection string to database is supplied.
 
 ## Tech-stack (back-end)
 
