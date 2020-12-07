@@ -20,6 +20,10 @@ namespace CqrsDemo.Services.Commands
             FAuthentication = AAuthentication;
         }
 
+        public Commands()
+        {
+        }
+
         public virtual async Task Push(object ACommand)
         {
 
