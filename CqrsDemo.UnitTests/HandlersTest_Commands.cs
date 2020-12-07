@@ -59,7 +59,7 @@ namespace CqrsDemo.UnitTests
             var LResult = await LHandleCreateParking.Handle(LCommand, CancellationToken.None);
 
             // Assert
-            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Exactly(2));
+            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
 
         }
@@ -79,7 +79,7 @@ namespace CqrsDemo.UnitTests
             var LResult = await LHandleOpenParking.Handle(LCommand, CancellationToken.None);
 
             // Assert
-            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Exactly(2));
+            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
 
         }
@@ -99,7 +99,7 @@ namespace CqrsDemo.UnitTests
             var LResult = await LHandleCloseParking.Handle(LCommand, CancellationToken.None);
 
             // Assert
-            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Exactly(2));
+            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
 
         }
@@ -121,7 +121,7 @@ namespace CqrsDemo.UnitTests
             var LResult = await LHandleTakeParkingPlace.Handle(LCommand, CancellationToken.None);
 
             // Assert
-            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Exactly(2));
+            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
 
         }
@@ -143,7 +143,7 @@ namespace CqrsDemo.UnitTests
             var LResult = await LHandleLeaveParkingPlace.Handle(LCommand, CancellationToken.None);
 
             // Assert
-            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Exactly(2));
+            LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
 
         }
