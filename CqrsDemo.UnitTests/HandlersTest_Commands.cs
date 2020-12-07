@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using CqrsDemo.Database;
 using CqrsDemo.UnitTests.Mock;
 using CqrsDemo.Handlers.Commands;
-using CqrsDemo.Services.Commands;
-using CqrsDemo.Services.Authentication;
+using CqrsDemo.UnitTests.Services;
 using CqrsDemo.Handlers.Commands.Models;
 
 namespace CqrsDemo.UnitTests
@@ -19,6 +18,8 @@ namespace CqrsDemo.UnitTests
     {
 
         private readonly Mock<MainDbContext> LMockDbContext;
+        private readonly FakeAuthentication FAuthentication;
+        private readonly FakeCommands FCommands;
 
         public HandlersTest_Commands() 
         {
@@ -36,6 +37,10 @@ namespace CqrsDemo.UnitTests
             LMockDbContext.Setup(AMainDbContext => AMainDbContext.Parking).Returns(LParkingDbSet.Object);
             LMockDbContext.Setup(AMainDbContext => AMainDbContext.ParkingPlaces).Returns(LParkingPlaceDbSet.Object);
 
+            // Create fake services
+            FAuthentication = new FakeAuthentication();
+            FCommands = new FakeCommands();
+
         }
 
         [Fact]
@@ -43,9 +48,7 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
-            var LAuthentication = new Authentication();
-            var LCommands = new Commands(LAuthentication, LMockDbContext.Object);
-            var LHandleCreateParking = new HandleCreateParking(LMockDbContext.Object, LCommands);
+            var LHandleCreateParking = new HandleCreateParking(LMockDbContext.Object, FCommands);
             var LCommand = new CreateParking
             {
                 ParkingName = "Best Parking",
@@ -66,9 +69,7 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
-            var LAuthentication = new Authentication();
-            var LCommands = new Commands(LAuthentication, LMockDbContext.Object);
-            var LHandleOpenParking = new HandleOpenParking(LMockDbContext.Object, LCommands);
+            var LHandleOpenParking = new HandleOpenParking(LMockDbContext.Object, FCommands);
             var LCommand = new OpenParking
             {
                 ParkingName = "Poznan Plaza"
@@ -88,9 +89,7 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
-            var LAuthentication = new Authentication();
-            var LCommands = new Commands(LAuthentication, LMockDbContext.Object);
-            var LHandleCloseParking = new HandleCloseParking(LMockDbContext.Object, LCommands);
+            var LHandleCloseParking = new HandleCloseParking(LMockDbContext.Object, FCommands);
             var LCommand = new CloseParking
             {
                 ParkingName = "Parking-786359"
@@ -111,9 +110,7 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
-            var LAuthentication = new Authentication();
-            var LCommands = new Commands(LAuthentication, LMockDbContext.Object);
-            var LHandleTakeParkingPlace = new HandleTakeParkingPlace(LMockDbContext.Object, LCommands, LAuthentication);
+            var LHandleTakeParkingPlace = new HandleTakeParkingPlace(LMockDbContext.Object, FCommands, FAuthentication);
             var LCommand = new TakeParkingPlace
             {
                 ParkingName = ParkingName,
@@ -135,9 +132,7 @@ namespace CqrsDemo.UnitTests
         {
 
             // Arrange
-            var LAuthentication = new Authentication();
-            var LCommands = new Commands(LAuthentication, LMockDbContext.Object);
-            var LHandleLeaveParkingPlace = new HandleLeaveParkingPlace(LMockDbContext.Object, LCommands);
+            var LHandleLeaveParkingPlace = new HandleLeaveParkingPlace(LMockDbContext.Object, FCommands);
             var LCommand = new LeaveParkingPlace
             {
                 ParkingName = ParkingName,
