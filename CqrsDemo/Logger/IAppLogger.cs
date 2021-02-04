@@ -1,12 +1,10 @@
-namespace CqrsDemo.AppLogger
+namespace CqrsDemo.Logger
 {
-
     /// <summary>
     /// Logger service that allows to store messages from application.
     /// </summary>
     public interface IAppLogger
     {
-
         /// <summary>
         /// Write debug information to log storage with current datetime stamp.
         /// </summary>
@@ -36,7 +34,5 @@ namespace CqrsDemo.AppLogger
         /// </summary>
         /// <param name="AMessage"></param>
         void LogFatality(string AMessage);
-
     }
-
 }

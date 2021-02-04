@@ -2,10 +2,8 @@
 
 namespace CqrsDemo.Models.Responses
 {
-
     public class ParkingInfo
     {
-
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
@@ -17,7 +15,5 @@ namespace CqrsDemo.Models.Responses
 
         [JsonPropertyName("availablePlaces")]
         public int AvailablePlaces { get; set; }
-
     }
-
 }

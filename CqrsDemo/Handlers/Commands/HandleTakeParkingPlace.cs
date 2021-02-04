@@ -11,10 +11,8 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Commands
 {
-
     public class HandleTakeParkingPlace : IRequestHandler<TakeParkingPlace, CommandResponse>
     {
-
         private readonly MainDbContext FMainDbContext;
         private readonly ICommands FCommandStore;
         private readonly IAuthentication FAuthentication;
@@ -28,7 +26,6 @@ namespace CqrsDemo.Handlers.Commands
 
         public async Task<CommandResponse> Handle(TakeParkingPlace Request, CancellationToken CancellationToken)
         {
-
             var LParking = (await FMainDbContext.Parking
                 .ToListAsync())
                 .FirstOrDefault(p => p.Name == Request.ParkingName);
@@ -75,9 +72,6 @@ namespace CqrsDemo.Handlers.Commands
             await FMainDbContext.SaveChangesAsync();
             await FCommandStore.Push(Request);
             return new CommandResponse { IsSucceeded = true };
-
         }
-
     }
-
 }

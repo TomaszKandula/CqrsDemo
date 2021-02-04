@@ -10,10 +10,8 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Commands
 {
-
     public class HandleCreateParking : IRequestHandler<CreateParking, CommandResponse>
     {
-
         private readonly MainDbContext FMainDbContext;
         private readonly ICommands FCommandStore;
 
@@ -25,7 +23,6 @@ namespace CqrsDemo.Handlers.Commands
 
         public async Task<CommandResponse> Handle(CreateParking Request, CancellationToken CancellationToken)
         {
-
             var LPlaces = Enumerable.Range(1, Request.Capacity)
                 .Select(ANumber =>
                 {
@@ -50,9 +47,6 @@ namespace CqrsDemo.Handlers.Commands
             await FMainDbContext.SaveChangesAsync();
             await FCommandStore.Push(Request);
             return new CommandResponse { IsSucceeded = true };
-
         }
-
     }
-
 }

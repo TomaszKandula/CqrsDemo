@@ -12,15 +12,12 @@ using CqrsDemo.Handlers.Queries.Models;
 
 namespace CqrsDemo.UnitTests
 {
-
     public class HandlersTest_Queries
     {
-
         private readonly MainDbContext FMainDbContext;
 
         public HandlersTest_Queries() 
         {
-
             // Create mock instance
             var LMockDbContext = new Mock<MainDbContext>();
 
@@ -34,13 +31,11 @@ namespace CqrsDemo.UnitTests
 
             // Create test instance with mocked dependencies
             FMainDbContext = LMockDbContext.Object;
-
         }
 
         [Fact]
         public async Task Should_GetAllParkingInfo()
         {
-
             // Arrange
             var LHandleAllParkingInfo = new HandleAllParkingInfo(FMainDbContext);
             var LRequest = new GetAllParkingInfo();
@@ -50,13 +45,11 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LResult.Should().HaveCount(2);
-
         }
 
         [Fact]
         public async Task Should_GetParkingInfo()
         {
-
             // Arrange
             var LHandleParkingInfo = new HandleParkingInfo(FMainDbContext);
             var LRequest = new GetParkingInfo() 
@@ -70,13 +63,11 @@ namespace CqrsDemo.UnitTests
             // Assert
             LResult.Name.Should().Be("Poznan Plaza");
             LResult.IsOpened.Should().BeFalse();
-
         }
 
         [Fact]
         public async Task Should_GetRandomAvailablePlace()
         {
-
             // Arrange
             var LHandleRandomAvailablePlace = new HandleRandomAvailablePlace(FMainDbContext);
             var LRequest = new GetRandomAvailablePlace();
@@ -87,13 +78,11 @@ namespace CqrsDemo.UnitTests
             // Assert
             LResult.Number.Should().BeGreaterThan(0);
             LResult.ParkingName.Should().NotBeNullOrEmpty();
-
         }
 
         [Fact]
         public async Task Should_GetTotalAvailablePlaces()
         {
-
             // Arrange
             var LHandleTotalAvailablePlaces = new HandleTotalAvailablePlaces(FMainDbContext);
             var LRequest = new GetTotalAvailablePlaces();
@@ -103,9 +92,6 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LResult.Number.Should().Be(3);
-
         }
-
     }
-
 }

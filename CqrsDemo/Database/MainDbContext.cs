@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CqrsDemo.Database
 {
-
     public class MainDbContext : DbContext
     {
-
         public MainDbContext(DbContextOptions<MainDbContext> AOptions) : base(AOptions)
         {
         }
@@ -21,7 +19,6 @@ namespace CqrsDemo.Database
 
         protected override void OnModelCreating(ModelBuilder AModelBuilder)
         {
-
             AModelBuilder.Entity<CommandStore>(AEntity =>
             {
                 AEntity.ToTable("CommandStore");
@@ -40,9 +37,6 @@ namespace CqrsDemo.Database
                     .WithMany(p => p.ParkingPlaces)
                     .HasForeignKey(d => d.ParkingName);
             });
-
         }
-
     }
-
 }

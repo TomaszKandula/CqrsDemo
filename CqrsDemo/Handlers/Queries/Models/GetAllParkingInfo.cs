@@ -4,9 +4,7 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Queries.Models
 {
-
     public class GetAllParkingInfo : IRequest<IEnumerable<ParkingInfo>>
     {
     }
-
 }

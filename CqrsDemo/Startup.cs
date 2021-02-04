@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.ResponseCompression;
+using CqrsDemo.Logger;
 using CqrsDemo.Database;
-using CqrsDemo.AppLogger;
 using CqrsDemo.Models.Responses;
 using CqrsDemo.Handlers.Queries;
 using CqrsDemo.Services.Commands;
@@ -23,7 +23,6 @@ namespace CqrsDemo
 {
     public class Startup
     {
-
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration AConfiguration)
@@ -33,7 +32,6 @@ namespace CqrsDemo
 
         public void ConfigureServices(IServiceCollection AServices)
         {
-
             AServices.AddControllers();
             AServices.AddMediatR(Assembly.GetExecutingAssembly());
             
@@ -43,7 +41,7 @@ namespace CqrsDemo
                 AAddOptions => AAddOptions.EnableRetryOnFailure());
             });
             
-            AServices.AddSingleton<IAppLogger, AppLogger.AppLogger>();
+            AServices.AddSingleton<IAppLogger, AppLogger>();
             AServices.AddScoped<IAuthentication, Authentication>();
             AServices.AddScoped<ICommands, Commands>();
 
@@ -64,12 +62,10 @@ namespace CqrsDemo
             {
                 AOption.SwaggerDoc("v1", new OpenApiInfo { Title = "CqrsDemo Api", Version = "v1" });
             });
-
         }
 
         public void Configure(IApplicationBuilder AApp, IWebHostEnvironment AEnv)
         {
-
             AApp.UseResponseCompression();
             
             if (AEnv.IsDevelopment())
@@ -89,7 +85,6 @@ namespace CqrsDemo
             {
                 endpoints.MapControllers();
             });
-
         }
     }
 }

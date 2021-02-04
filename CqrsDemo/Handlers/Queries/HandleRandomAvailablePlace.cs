@@ -10,10 +10,8 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Queries
 {
-
     public class HandleRandomAvailablePlace : IRequestHandler<GetRandomAvailablePlace, ParkingPlaceInfo>
     {
-
         private readonly MainDbContext FMainDbContext;
 
         public HandleRandomAvailablePlace(MainDbContext AMainDbContext) 
@@ -23,24 +21,20 @@ namespace CqrsDemo.Handlers.Queries
 
         public async Task<ParkingPlaceInfo> Handle(GetRandomAvailablePlace Request, CancellationToken CancellationToken) 
         {
-
             var LRandom = new Random();
 
             var LParkingPlace = (await FMainDbContext.ParkingPlaces
                 .Include(AParkingPlace => AParkingPlace.ParkingNameNavigation.ParkingPlaces)
                 .Where(AParkingPlace => AParkingPlace.ParkingNameNavigation.IsOpened && AParkingPlace.IsFree)
                 .OrderBy(AParkingPlace => LRandom.Next())
-                .ToListAsync()
-                ).FirstOrDefault();
+                .ToListAsync())
+                .FirstOrDefault();
 
             return new ParkingPlaceInfo
             {
                 ParkingName = LParkingPlace.ParkingName,
                 Number = LParkingPlace.Number
             };
-
         }
-
     }
-
 }

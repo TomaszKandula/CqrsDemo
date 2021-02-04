@@ -4,16 +4,12 @@ using CqrsDemo.Database.Models;
 
 namespace CqrsDemo.UnitTests.Mock
 {
-
     public static class DummyLoad
     {
-
         public static List<CommandStore> GetDummyCommands() 
         {
-
             return new List<CommandStore>
             {
-
                 new CommandStore
                 { 
                     Id = 1,
@@ -30,17 +26,13 @@ namespace CqrsDemo.UnitTests.Mock
                     CreatedAt = DateTime.Parse("2020-12-04 20:28:03"),
                     UserId = "30fb43bf-9689-4a16-b41f-75775d11a02f"
                 }
-
             };
-
         }
 
         public static List<Parking> GetDummyParkings() 
         {
-
             return new List<Parking>
             {
-
                 new Parking
                 { 
                     Name = "Poznan Plaza",
@@ -51,17 +43,13 @@ namespace CqrsDemo.UnitTests.Mock
                     Name = "Parking-786359",
                     IsOpened = true,
                 }
-
-            };
-        
+            };       
         }
 
         public static List<ParkingPlace> GetDummyParkingPlaces() 
         {
-
             return new List<ParkingPlace>
             {
-
                 new ParkingPlace
                 { 
                     ParkingName = "Poznan Plaza",
@@ -110,11 +98,7 @@ namespace CqrsDemo.UnitTests.Mock
                         IsOpened = true
                     }
                 }
-
-            };
-        
+            };       
         } 
-
     }
-
 }

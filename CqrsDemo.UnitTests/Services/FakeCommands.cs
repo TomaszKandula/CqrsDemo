@@ -3,10 +3,8 @@ using CqrsDemo.Services.Commands;
 
 namespace CqrsDemo.UnitTests.Services
 {
-
     public class FakeCommands : Commands
     {
-
         public FakeCommands() 
         { 
         }
@@ -15,7 +13,6 @@ namespace CqrsDemo.UnitTests.Services
         {
             await Task.Run(() => { /* do nothing */ });
         }
-    
+   
     }
-
 }
