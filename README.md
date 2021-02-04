@@ -72,17 +72,10 @@ Example of controller using MediatR.
 
 ```csharp
 [HttpGet]
-public async Task<IActionResult> GetAllParkingInfo()
+public async Task<IEnumerable<GetAllParkingInfoQueryResult>> GetAllParkingInfo()
 {
-    try 
-    {
-        var LQuery = await FMediator.Send(new GetAllParkingInfo());
-        return StatusCode(200, LQuery);
-    }
-    catch (Exception LException)
-    {
-        return StatusCode(500, LException.Message);
-    }
+    var LQuery = new GetAllParkingInfoQuery();
+    return await FMediator.Send(LQuery);
 }
 ```
 
@@ -91,122 +84,109 @@ Depending on use case, supplied object (`GetAllParkingInfo`) may carry the data.
 Query handler for `GetAllParkingInfo` follows:
 
 ```csharp
-public async Task<IEnumerable<ParkingInfo>> Handle(GetAllParkingInfo Request, CancellationToken CancellationToken) 
+public class GetAllParkingInfoQueryHandler : IRequestHandler<GetAllParkingInfoQuery, IEnumerable<GetAllParkingInfoQueryResult>>
 {
-    var LParkings = await FMainDbContext.Parking
-        .Include(AParking => AParking.ParkingPlaces)
-        .ToListAsync();
+    private readonly MainDbContext FMainDbContext;
 
-    return LParkings.Select(AParking =>
+    public GetAllParkingInfoQueryHandler(MainDbContext AMainDbContext) 
     {
-        return new ParkingInfo
+        FMainDbContext = AMainDbContext;
+    }
+
+    public async Task<IEnumerable<GetAllParkingInfoQueryResult>> Handle(GetAllParkingInfoQuery Request, CancellationToken CancellationToken) 
+    {
+        var LParkings = await FMainDbContext.Parking
+            .Include(AParking => AParking.ParkingPlaces)
+            .ToListAsync();
+
+        return LParkings.Select(AParking =>
         {
-            Name = AParking.Name,
-            IsOpened = AParking.IsOpened,
-            MaximumPlaces = AParking.ParkingPlaces.Count,
-            AvailablePlaces = AParking.IsOpened ? AParking.ParkingPlaces
-                .Where(AParkingPlace => AParkingPlace.IsFree)
-                .Count() : 0
-        };
-    });
+            return new GetAllParkingInfoQueryResult
+            {
+                Name = AParking.Name,
+                IsOpened = AParking.IsOpened,
+                MaximumPlaces = AParking.ParkingPlaces.Count,
+                AvailablePlaces = AParking.IsOpened 
+                    ? AParking.ParkingPlaces
+                        .Where(AParkingPlace => AParkingPlace.IsFree)
+                        .Count() 
+                    : 0
+            };
+        });
+    }
 }
 ```
 
-Handler returns list of objects (`ParkingInfo`), we have used `IEnumerable` rather than `IList` so the compiler have a chance to optimise the code.
+Handler returns list of objects (`GetAllParkingInfoQueryResult`), we have used `IEnumerable` rather than `IList` so the compiler have a chance to optimise the code:
+
+```csharp
+public class GetAllParkingInfoQueryResult
+{
+    public string Name { get; set; }
+    public bool IsOpened { get; set; }
+    public int MaximumPlaces { get; set; }
+    public int AvailablePlaces { get; set; }
+}
+```
 
 ### A Command
 
 Example of controller:
 
 ```csharp
-[HttpPost("{ParkingName}/{PlaceNumber}/Take")]
-public async Task<IActionResult> TakeParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
+[HttpPost]
+public async Task<Unit> CreateParking([FromBody] CreateParkingDto PayLoad)
 {
-    try
-    {
-        var LCommand = await FMediator.Send(new TakeParkingPlace
-        {
-            ParkingName = ParkingName,
-            PlaceNumber = PlaceNumber
-        });
-        return StatusCode(200, LCommand);
-    }
-    catch (Exception LException)
-    {
-        return StatusCode(500, LException.Message);
-    }
+    var LCommand = ParkingMapper.MapToCreateParkingCommand(PayLoad);
+    return await FMediator.Send(LCommand);
 }
 ```
 
-In case of commands, because it is a _call to action_, there is no data in the body, so we use arguments from the route.
-
-Command handler (`HandleTakeParkingPlace`):
+Command handler (`CreateParkingCommandHandler`):
 
 ```csharp
-public async Task<CommandResponse> Handle(TakeParkingPlace Request, CancellationToken CancellationToken)
+public class CreateParkingCommandHandler : IRequestHandler<CreateParkingCommand, Unit>
 {
-    var LParking = (await FMainDbContext.Parking
-        .ToListAsync())
-        .FirstOrDefault(p => p.Name == Request.ParkingName);
+    private readonly MainDbContext FMainDbContext;
+    private readonly ICommands FCommandStore;
 
-    if (LParking == null)
-        return new CommandResponse 
-        { 
-            IsSucceeded = false,
-            ErrorCode = "",
-            ErrorDesc = $"Cannot find parking '{Request.ParkingName}'."
-        };
+    public CreateParkingCommandHandler(MainDbContext AMainDbContext, ICommands ACommandStore) 
+    {
+        FMainDbContext = AMainDbContext;
+        FCommandStore = ACommandStore;
+    }
 
-    if (!LParking.IsOpened)
-        return new CommandResponse 
-        { 
-            IsSucceeded = false,
-            ErrorCode = "",
-            ErrorDesc = $"The parking '{Request.ParkingName}' is closed."
-        };
+    public async Task<Unit> Handle(CreateParkingCommand Request, CancellationToken CancellationToken)
+    {
+        var LPlaces = Enumerable.Range(1, Request.Capacity)
+            .Select(ANumber =>
+            {
+                return new ParkingPlace
+                {
+                    ParkingName = Request.ParkingName,
+                    Number = ANumber,
+                    IsFree = true
+                };
+            })
+            .ToList();
 
-    var LParkingPlace = (await FMainDbContext.ParkingPlaces
-        .ToListAsync())
-        .FirstOrDefault(p => p.ParkingName == Request.ParkingName && p.Number == Request.PlaceNumber);
-
-    if (LParkingPlace == null)
-        return new CommandResponse 
-        { 
-            IsSucceeded = false,
-            ErrorCode = "no_such_place",
-            ErrorDesc = $"Cannot find place #{Request.PlaceNumber} in the parking '{Request.ParkingName}'."
-        };
-
-    if (!LParkingPlace.IsFree)
-        return new CommandResponse
+        var LParking = new Parking
         {
-            IsSucceeded = false,
-            ErrorCode = "parking_taken",
-            ErrorDesc = $"Parking place #{Request.PlaceNumber} is already taken."
+            Name = Request.ParkingName,
+            IsOpened = true,
+            ParkingPlaces = LPlaces
         };
 
-    LParkingPlace.IsFree = false;
-    LParkingPlace.UserId = FAuthentication.GetUserId;
+        FMainDbContext.Add(LParking);
 
-    await FMainDbContext.SaveChangesAsync();
-    await FCommandStore.Push(Request);
-    return new CommandResponse { IsSucceeded = true };
+        await FMainDbContext.SaveChangesAsync();
+        await FCommandStore.Push(Request);
+        return await Task.FromResult(Unit.Value);
+    }
 }
 ```
 
-Unlike query handler, all command handlers have one common response model (`CommandResponse`):
-
-```csharp
-public class CommandResponse
-{
-    [JsonPropertyName("isSucceeded")]
-    public bool IsSucceeded { get; set; }
-    [JsonPropertyName("errorCode")]
-    public string ErrorCode { get; set; } = "no_errors";
-    [JsonPropertyName("errorDesc")]
-    public string ErrorDesc { get; set; } = "n/a";
-}
-```
+Unlike query handler, all command handlers return `Unit.Value`.
 
 ## Command Sourcing
 
