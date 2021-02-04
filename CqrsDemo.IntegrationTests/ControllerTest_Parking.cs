@@ -1,13 +1,17 @@
 using Xunit;
 using FluentAssertions;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using CqrsDemo.Models.Requests;
-using CqrsDemo.Models.Responses;
+using CqrsDemo.Shared.Dto;
 using CqrsDemo.IntegrationTests.Configuration;
+using CqrsDemo.Handlers.Queries.GetParkingInfo;
+using CqrsDemo.Handlers.Queries.GetAllParkingInfo;
+using CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces;
+using CqrsDemo.Handlers.Queries.GetRandomAvailablePlace;
 
 namespace CqrsDemo.IntegrationTests
 {
@@ -24,7 +28,7 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_GetAllParkingInfos() 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/";
+            var LRequest = $"/api/v1/parking/GetAllParkingInfo/";
 
             // Act
             var LResponse = await FHttpClient.GetAsync(LRequest);
@@ -43,7 +47,7 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_GetParkingInfo(string ParkingName)
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/{ParkingName}/";
+            var LRequest = $"/api/v1/parking/GetParkingInfo/{ParkingName}/";
 
             // Act
             var LResponse = await FHttpClient.GetAsync(LRequest);
@@ -53,7 +57,7 @@ namespace CqrsDemo.IntegrationTests
             LResponse.EnsureSuccessStatusCode();
             LContent.Should().NotBeNull();
 
-            var LDeserialized = JsonConvert.DeserializeObject<GetAllParkingInfoQueryResult>(LContent);
+            var LDeserialized = JsonConvert.DeserializeObject<GetParkingInfoQueryResult>(LContent);
             LDeserialized.Name.Should().Be("Lidl Parking");
         }
 
@@ -61,7 +65,7 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_GetTotalAvailablePlaces()
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/availableplaces/count/";
+            var LRequest = $"/api/v1/parking/GetTotalAvailablePlaces/";
 
             // Act
             var LResponse = await FHttpClient.GetAsync(LRequest);
@@ -79,7 +83,7 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_GetRandomAvailablePlace() 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/availableplaces/random/";
+            var LRequest = $"/api/v1/parking/GetRandomAvailablePlace/";
 
             // Act
             var LResponse = await FHttpClient.GetAsync(LRequest);
@@ -98,10 +102,10 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_CreateParking() 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/";
+            var LRequest = $"/api/v1/parking/CreateParking/";
 
             var NewId = Guid.NewGuid().ToString();
-            var LPayLoad = new CreateParkingRequest
+            var LPayLoad = new CreateParkingDto
             {
                 ParkingName = $"Parking-{NewId[0..6]}",
                 Capacity = 10
@@ -117,9 +121,6 @@ namespace CqrsDemo.IntegrationTests
             // Assert
             LResponse.EnsureSuccessStatusCode();
             LContent.Should().NotBeNull();
-
-            var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
-            LDeserialized.IsSucceeded.Should().BeTrue();
         }
 
         [Theory]
@@ -127,19 +128,20 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_FailToOpenParking(string ParkingName) 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/{ParkingName}/open";
+            var LRequest = $"/api/v1/parking/OpenParking/";
+            var LPayLoad = new OpenParkingDto
+            {
+                ParkingName = ParkingName
+            };
+
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
+            LNewRequest.Content = new StringContent(JsonConvert.SerializeObject(LPayLoad), System.Text.Encoding.Default, "application/json");
 
             // Act
             var LResponse = await FHttpClient.SendAsync(LNewRequest);
-            var LContent = await LResponse.Content.ReadAsStringAsync();
 
             // Assert
-            LResponse.EnsureSuccessStatusCode();
-            LContent.Should().NotBeNull();
-
-            var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
-            LDeserialized.IsSucceeded.Should().BeFalse();
+            LResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -147,19 +149,20 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_FailToCloseParking(string ParkingName) 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/{ParkingName}/close";
+            var LRequest = $"/api/v1/parking/CloseParking/";
+            var LPayLoad = new CloseParkingDto
+            {
+                ParkingName = ParkingName
+            };
+
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
+            LNewRequest.Content = new StringContent(JsonConvert.SerializeObject(LPayLoad), System.Text.Encoding.Default, "application/json");
 
             // Act
             var LResponse = await FHttpClient.SendAsync(LNewRequest);
-            var LContent = await LResponse.Content.ReadAsStringAsync();
 
-            // Assert
-            LResponse.EnsureSuccessStatusCode();
-            LContent.Should().NotBeNull();
-
-            var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
-            LDeserialized.IsSucceeded.Should().BeFalse();
+            // Assert           
+            LResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -167,19 +170,21 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_FailToTakeParkingPlace(string ParkingName, int PlaceNumber) 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/{ParkingName}/{PlaceNumber}/take";
+            var LRequest = $"/api/v1/parking/TakeParkingPlace/";
+            var LPayLoad = new TakeParkingPlaceDto
+            {
+                ParkingName = ParkingName,
+                PlaceNumber = PlaceNumber
+            };
+
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
+            LNewRequest.Content = new StringContent(JsonConvert.SerializeObject(LPayLoad), System.Text.Encoding.Default, "application/json");
 
             // Act
             var LResponse = await FHttpClient.SendAsync(LNewRequest);
-            var LContent = await LResponse.Content.ReadAsStringAsync();
 
             // Assert
-            LResponse.EnsureSuccessStatusCode();
-            LContent.Should().NotBeNull();
-
-            var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
-            LDeserialized.IsSucceeded.Should().BeFalse();
+            LResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -187,19 +192,21 @@ namespace CqrsDemo.IntegrationTests
         public async Task Should_FailToLeaveParkingPlace(string ParkingName, int PlaceNumber) 
         {
             // Arrange
-            var LRequest = $"/api/v1/parking/{ParkingName}/{PlaceNumber}/take";
+            var LRequest = $"/api/v1/parking/LeaveParkingPlace/";
+            var LPayLoad = new LeaveParkingPlaceDto
+            {
+                ParkingName = ParkingName,
+                PlaceNumber = PlaceNumber
+            };
+
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
+            LNewRequest.Content = new StringContent(JsonConvert.SerializeObject(LPayLoad), System.Text.Encoding.Default, "application/json");
 
             // Act
             var LResponse = await FHttpClient.SendAsync(LNewRequest);
-            var LContent = await LResponse.Content.ReadAsStringAsync();
 
             // Assert
-            LResponse.EnsureSuccessStatusCode();
-            LContent.Should().NotBeNull();
-
-            var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
-            LDeserialized.IsSucceeded.Should().BeFalse();
+            LResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
 }
