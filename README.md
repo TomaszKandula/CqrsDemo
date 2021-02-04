@@ -35,12 +35,10 @@ For testing, local SQL server/database is used, connection string have to be set
 
 ```
 {
-
   "ConnectionStrings": 
   {
     "DbConnect": "set_env"
   }
-
 }
 ```
 
@@ -93,11 +91,11 @@ public class GetAllParkingInfoQueryHandler : IRequestHandler<GetAllParkingInfoQu
         FMainDbContext = AMainDbContext;
     }
 
-    public async Task<IEnumerable<GetAllParkingInfoQueryResult>> Handle(GetAllParkingInfoQuery Request, CancellationToken CancellationToken) 
+    public async Task<IEnumerable<GetAllParkingInfoQueryResult>> Handle(GetAllParkingInfoQuery ARequest, CancellationToken ACancellationToken) 
     {
         var LParkings = await FMainDbContext.Parking
             .Include(AParking => AParking.ParkingPlaces)
-            .ToListAsync();
+            .ToListAsync(ACancellationToken);
 
         return LParkings.Select(AParking =>
         {
@@ -156,14 +154,14 @@ public class CreateParkingCommandHandler : IRequestHandler<CreateParkingCommand,
         FCommandStore = ACommandStore;
     }
 
-    public async Task<Unit> Handle(CreateParkingCommand Request, CancellationToken CancellationToken)
+    public async Task<Unit> Handle(CreateParkingCommand ARequest, CancellationToken ACancellationToken)
     {
-        var LPlaces = Enumerable.Range(1, Request.Capacity)
+        var LPlaces = Enumerable.Range(1, ARequest.Capacity)
             .Select(ANumber =>
             {
                 return new ParkingPlace
                 {
-                    ParkingName = Request.ParkingName,
+                    ParkingName = ARequest.ParkingName,
                     Number = ANumber,
                     IsFree = true
                 };
@@ -179,8 +177,8 @@ public class CreateParkingCommandHandler : IRequestHandler<CreateParkingCommand,
 
         FMainDbContext.Add(LParking);
 
-        await FMainDbContext.SaveChangesAsync();
-        await FCommandStore.Push(Request);
+        await FMainDbContext.SaveChangesAsync(ACancellationToken);
+        await FCommandStore.Push(ARequest, ACancellationToken);
         return await Task.FromResult(Unit.Value);
     }
 }
@@ -195,7 +193,7 @@ This example does not provide event sourcing, but have example of command sourci
 The service implements just one method (`push`):
 
 ```csharp
-public virtual async Task Push(object ACommand)
+public virtual async Task Push(object ACommand, CancellationToken ACancellationToken = default)
 {
     FMainDbContext.CommandStore.Add(
         new CommandStore
@@ -206,6 +204,6 @@ public virtual async Task Push(object ACommand)
             UserId    = FAuthentication.GetUserId
         }
     );
-    await FMainDbContext.SaveChangesAsync();
+    await FMainDbContext.SaveChangesAsync(ACancellationToken);
 }
 ```
