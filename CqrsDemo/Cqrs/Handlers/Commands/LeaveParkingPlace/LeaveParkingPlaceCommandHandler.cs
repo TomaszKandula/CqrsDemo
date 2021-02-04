@@ -1,9 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Database;
+using CqrsDemo.Exceptions;
+using CqrsDemo.Shared.Resources;
 using CqrsDemo.Services.Commands;
 using MediatR;
 
@@ -23,24 +24,24 @@ namespace CqrsDemo.Handlers.Commands.LeaveParkingPlace
         public async Task<Unit> Handle(LeaveParkingPlaceCommand Request, CancellationToken CancellationToken)
         {
             var LParking = (await FMainDbContext.Parking
-                .ToListAsync()
-                ).FirstOrDefault(Parking => Parking.Name == Request.ParkingName);
+                .ToListAsync())
+                .FirstOrDefault(Parking => Parking.Name == Request.ParkingName);
 
             if (LParking == null)
-                throw new Exception($"Cannot find parking '{Request.ParkingName}'.");
+                throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
 
             if (!LParking.IsOpened)
-                throw new Exception($"The parking '{Request.ParkingName}' is closed.");
+                throw new BusinessException(nameof(ErrorCodes.PARKING_ALREADY_CLOSED), ErrorCodes.PARKING_ALREADY_CLOSED);
 
             var LParkingPlace = (await FMainDbContext.ParkingPlaces
                 .ToListAsync())
                 .FirstOrDefault(Parking => Parking.ParkingName == Request.ParkingName && Parking.Number == Request.PlaceNumber);
 
             if (LParkingPlace == null)
-                throw new Exception($"Cannot find place #{Request.PlaceNumber} in the parking '{Request.ParkingName}'.");
+                throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING_PLACE), ErrorCodes.CANNOT_FIND_PARKING_PLACE);
 
             if (LParkingPlace.IsFree)
-                throw new Exception($"Parking place #{Request.PlaceNumber} is still free.");
+                throw new BusinessException(nameof(ErrorCodes.PARKING_PLACE_STILL_FREE), ErrorCodes.PARKING_PLACE_STILL_FREE);
 
             LParkingPlace.IsFree = true;
             LParkingPlace.UserId = null;

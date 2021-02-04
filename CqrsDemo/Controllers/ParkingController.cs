@@ -11,13 +11,13 @@ using MediatR;
 
 namespace CqrsDemo.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class ParkingController : ControllerBase
     {
         private readonly IMediator FMediator;
 
-        public ParkingController(IMediator AMediator) 
+        public ParkingController(IMediator AMediator)
         {
             FMediator = AMediator;
         }
@@ -36,14 +36,14 @@ namespace CqrsDemo.Controllers
             return await FMediator.Send(LQuery);
         }
 
-        [HttpGet("AvailablePlaces/Count")]
+        [HttpGet()]
         public async Task<GetTotalAvailablePlacesQueryResult> GetTotalAvailablePlaces()
         {
             var LQuery = new GetTotalAvailablePlacesQuery();
             return await FMediator.Send(LQuery);
         }
 
-        [HttpGet("AvailablePlaces/Random")]
+        [HttpGet()]
         public async Task<GetRandomAvailablePlaceQueryResult> GetRandomAvailablePlace()
         {
             var LQuery = new GetRandomAvailablePlaceQuery();
@@ -64,21 +64,21 @@ namespace CqrsDemo.Controllers
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost("{ParkingName}/Close")]
+        [HttpPost()]
         public async Task<Unit> CloseParking([FromBody] CloseParkingDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToCloseParkingCommand(PayLoad);
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost("{ParkingName}/{PlaceNumber}/Take")]
+        [HttpPost()]
         public async Task<Unit> TakeParkingPlace([FromBody] TakeParkingPlaceDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToTakeParkingPlaceCommand(PayLoad);
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost("{ParkingName}/{PlaceNumber}/Leave")]
+        [HttpPost()]
         public async Task<Unit> LeaveParkingPlace([FromBody] LeaveParkingPlaceDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToLeaveParkingPlaceCommand(PayLoad);
