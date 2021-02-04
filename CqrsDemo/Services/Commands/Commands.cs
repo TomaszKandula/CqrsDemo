@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using CqrsDemo.Database;
@@ -22,7 +23,7 @@ namespace CqrsDemo.Services.Commands
         {
         }
 
-        public virtual async Task Push(object ACommand)
+        public virtual async Task Push(object ACommand, CancellationToken ACancellationToken = default)
         {
             FMainDbContext.CommandStore.Add(
                 new CommandStore
@@ -34,7 +35,7 @@ namespace CqrsDemo.Services.Commands
                 }
             );
 
-            await FMainDbContext.SaveChangesAsync();
+            await FMainDbContext.SaveChangesAsync(ACancellationToken);
         }
     }
 }

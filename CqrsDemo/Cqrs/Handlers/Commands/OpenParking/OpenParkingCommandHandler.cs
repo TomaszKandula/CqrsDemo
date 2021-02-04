@@ -21,11 +21,11 @@ namespace CqrsDemo.Handlers.Commands.OpenParking
             FCommandStore = ACommandStore;
         }
 
-        public async Task<Unit> Handle(OpenParkingCommand Request, CancellationToken CancellationToken)
+        public async Task<Unit> Handle(OpenParkingCommand ARequest, CancellationToken ACancellationToken)
         {
             var LParking = (await FMainDbContext.Parking
-                .ToListAsync())
-                .FirstOrDefault(p => p.Name == Request.ParkingName);
+                .ToListAsync(ACancellationToken))
+                .FirstOrDefault(p => p.Name == ARequest.ParkingName);
 
             if (LParking == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
@@ -35,8 +35,8 @@ namespace CqrsDemo.Handlers.Commands.OpenParking
 
             LParking.IsOpened = true;
 
-            await FMainDbContext.SaveChangesAsync();
-            await FCommandStore.Push(Request);
+            await FMainDbContext.SaveChangesAsync(ACancellationToken);
+            await FCommandStore.Push(ARequest, ACancellationToken);
             return await Task.FromResult(Unit.Value);
         }
     }

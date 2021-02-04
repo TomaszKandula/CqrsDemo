@@ -3,6 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Database;
+using CqrsDemo.Exceptions;
+using CqrsDemo.Shared.Resources;
 using MediatR;
 
 namespace CqrsDemo.Handlers.Queries.GetParkingInfo
@@ -16,15 +18,15 @@ namespace CqrsDemo.Handlers.Queries.GetParkingInfo
             FMainDbContext = AMainDbContext;
         }
 
-        public async Task<GetParkingInfoQueryResult> Handle(GetParkingInfoQuery Request, CancellationToken CancellationToken) 
+        public async Task<GetParkingInfoQueryResult> Handle(GetParkingInfoQuery ARequest, CancellationToken ACancellationToken) 
         {
             var LParking = (await FMainDbContext.Parking
                 .Include(AParking => AParking.ParkingPlaces)
-                .ToListAsync())
-                .FirstOrDefault(p => p.Name == Request.ParkingName);
+                .ToListAsync(ACancellationToken))
+                .FirstOrDefault(p => p.Name == ARequest.ParkingName);
 
-            //if (LParking == null)
-            //    throw new Exception($"Cannot find parking '{AQuery.ParkingName}'.");
+            if (LParking == null)
+                throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
 
             return new GetParkingInfoQueryResult
             {
