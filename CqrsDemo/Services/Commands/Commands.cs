@@ -7,10 +7,8 @@ using CqrsDemo.Services.Authentication;
 
 namespace CqrsDemo.Services.Commands
 {
-
     public class Commands : ICommands
     {
-
         private readonly MainDbContext FMainDbContext;
         private readonly IAuthentication FAuthentication;
 
@@ -26,7 +24,6 @@ namespace CqrsDemo.Services.Commands
 
         public virtual async Task Push(object ACommand)
         {
-
             FMainDbContext.CommandStore.Add(
                 new CommandStore
                 {
@@ -38,9 +35,6 @@ namespace CqrsDemo.Services.Commands
             );
 
             await FMainDbContext.SaveChangesAsync();
-
         }
-
     }
-
 }

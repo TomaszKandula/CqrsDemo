@@ -10,10 +10,8 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Queries
 {
-
     public class HandleAllParkingInfo : IRequestHandler<GetAllParkingInfo, IEnumerable<ParkingInfo>>
     {
-
         private readonly MainDbContext FMainDbContext;
 
         public HandleAllParkingInfo(MainDbContext AMainDbContext) 
@@ -23,28 +21,24 @@ namespace CqrsDemo.Handlers.Queries
 
         public async Task<IEnumerable<ParkingInfo>> Handle(GetAllParkingInfo Request, CancellationToken CancellationToken) 
         {
-
             var LParkings = await FMainDbContext.Parking
                 .Include(AParking => AParking.ParkingPlaces)
                 .ToListAsync();
 
             return LParkings.Select(AParking =>
             {
-
                 return new ParkingInfo
                 {
                     Name = AParking.Name,
                     IsOpened = AParking.IsOpened,
                     MaximumPlaces = AParking.ParkingPlaces.Count,
-                    AvailablePlaces = AParking.IsOpened ? AParking.ParkingPlaces
-                        .Where(AParkingPlace => AParkingPlace.IsFree)
-                        .Count() : 0
+                    AvailablePlaces = AParking.IsOpened 
+                        ? AParking.ParkingPlaces
+                            .Where(AParkingPlace => AParkingPlace.IsFree)
+                            .Count() 
+                        : 0
                 };
-
             });
-
         }
-
     }
-
 }

@@ -9,10 +9,8 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Queries
 {
-
     public class HandleParkingInfo : IRequestHandler<GetParkingInfo, ParkingInfo>
     {
-
         private readonly MainDbContext FMainDbContext;
 
         public HandleParkingInfo(MainDbContext AMainDbContext) 
@@ -22,11 +20,10 @@ namespace CqrsDemo.Handlers.Queries
 
         public async Task<ParkingInfo> Handle(GetParkingInfo Request, CancellationToken CancellationToken) 
         {
-
             var LParking = (await FMainDbContext.Parking
                 .Include(AParking => AParking.ParkingPlaces)
-                .ToListAsync()
-                ).FirstOrDefault(p => p.Name == Request.ParkingName);
+                .ToListAsync())
+                .FirstOrDefault(p => p.Name == Request.ParkingName);
 
             //if (LParking == null)
             //    throw new Exception($"Cannot find parking '{AQuery.ParkingName}'.");
@@ -36,14 +33,12 @@ namespace CqrsDemo.Handlers.Queries
                 Name = LParking.Name,
                 IsOpened = LParking.IsOpened,
                 MaximumPlaces = LParking.ParkingPlaces.Count,
-                AvailablePlaces =
-                    LParking.IsOpened ? LParking.ParkingPlaces
+                AvailablePlaces = LParking.IsOpened 
+                    ? LParking.ParkingPlaces
                         .Where(AParkingPlace => AParkingPlace.IsFree)
-                        .Count() : 0
+                        .Count() 
+                    : 0
             };
-
         }
-
     }
-
 }

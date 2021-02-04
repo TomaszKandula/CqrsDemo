@@ -1,19 +1,17 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Database;
 using CqrsDemo.Models.Responses;
 using CqrsDemo.Services.Commands;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Handlers.Commands.Models;
 using MediatR;
 
 namespace CqrsDemo.Handlers.Commands
 {
-
     public class HandleCloseParking : IRequestHandler<CloseParking, CommandResponse>
     {
-
         private readonly MainDbContext FMainDbContext;
         private readonly ICommands FCommandStore;
 
@@ -25,7 +23,6 @@ namespace CqrsDemo.Handlers.Commands
 
         public async Task<CommandResponse> Handle(CloseParking Request, CancellationToken CancellationToken) 
         {
-
             var LParking = (await FMainDbContext.Parking
                 .ToListAsync())
                 .FirstOrDefault(Parking => Parking.Name == Request.ParkingName);
@@ -51,9 +48,6 @@ namespace CqrsDemo.Handlers.Commands
             await FMainDbContext.SaveChangesAsync();
             await FCommandStore.Push(Request);
             return new CommandResponse { IsSucceeded = true };
-
         }
-
     }
-
 }

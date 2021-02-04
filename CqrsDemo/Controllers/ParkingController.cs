@@ -8,12 +8,10 @@ using MediatR;
 
 namespace CqrsDemo.Controllers
 {
-
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ParkingController : ControllerBase
     {
-
         private readonly IMediator FMediator;
 
         public ParkingController(IMediator AMediator) 
@@ -24,7 +22,6 @@ namespace CqrsDemo.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllParkingInfo()
         {
-
             try 
             {
                 var LQuery = await FMediator.Send(new GetAllParkingInfo());
@@ -34,13 +31,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpGet("{ParkingName}")]
         public async Task<IActionResult> GetParkingInfo([FromRoute] string ParkingName)
         {
-
             try
             {
                 var LQuery = await FMediator.Send(new GetParkingInfo
@@ -53,13 +48,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpGet("AvailablePlaces/Count")]
         public async Task<IActionResult> GetTotalAvailablePlaces()
         {
-
             try
             {
                 var LQuery = await FMediator.Send(new GetTotalAvailablePlaces());
@@ -69,13 +62,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpGet("AvailablePlaces/Random")]
         public async Task<IActionResult> GetRandomAvailablePlace()
         {
-
             try
             {
                 var LQuery = await FMediator.Send(new GetRandomAvailablePlace());
@@ -85,13 +76,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateParking([FromBody] CreateParkingRequest PayLoad)
         {
-
             try 
             {
                 var LCommand = await FMediator.Send(new CreateParking 
@@ -105,13 +94,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpPost("{ParkingName}/Open")]
         public async Task<IActionResult> OpenParking([FromRoute] string ParkingName)
         {
-
             try
             {
                 var LCommand = await FMediator.Send(new OpenParking
@@ -124,13 +111,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpPost("{ParkingName}/Close")]
         public async Task<IActionResult> CloseParking([FromRoute] string ParkingName)
         {
-
             try
             {
                 var LCommand = await FMediator.Send(new CloseParking
@@ -143,13 +128,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpPost("{ParkingName}/{PlaceNumber}/Take")]
         public async Task<IActionResult> TakeParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
         {
-
             try
             {
                 var LCommand = await FMediator.Send(new TakeParkingPlace
@@ -163,13 +146,11 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
 
         [HttpPost("{ParkingName}/{PlaceNumber}/Leave")]
         public async Task<IActionResult> LeaveParkingPlace([FromRoute] string ParkingName, int PlaceNumber)
         {
-
             try
             {
                 var LCommand = await FMediator.Send(new LeaveParkingPlace
@@ -183,9 +164,6 @@ namespace CqrsDemo.Controllers
             {
                 return StatusCode(500, LException.Message);
             }
-
         }
-
     }
-
 }

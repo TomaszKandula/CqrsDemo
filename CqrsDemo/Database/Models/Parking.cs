@@ -2,10 +2,8 @@
 
 namespace CqrsDemo.Database.Models
 {
-
     public class Parking
     {
-
         public Parking()
         {
             ParkingPlaces = new HashSet<ParkingPlace>();
@@ -15,7 +13,5 @@ namespace CqrsDemo.Database.Models
         public bool IsOpened { get; set; }
 
         public virtual ICollection<ParkingPlace> ParkingPlaces { get; set; }
-
     }
-
 }

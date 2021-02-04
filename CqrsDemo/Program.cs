@@ -7,10 +7,8 @@ using Microsoft.Extensions.Hosting;
 
 namespace CqrsDemo
 {
-
     public class Program
     {
-
         public static IHostBuilder CreateHostBuilder(string[] Args) =>
             Host.CreateDefaultBuilder(Args)
                 .ConfigureWebHostDefaults(AWebBuilder =>
@@ -21,9 +19,8 @@ namespace CqrsDemo
 
         public static int Main(string[] Args)
         {
-
-            var LOgsPath = AppDomain.CurrentDomain.BaseDirectory + "\\logs";
-            if (!Directory.Exists(LOgsPath)) Directory.CreateDirectory(LOgsPath);
+            var LLogsPath = AppDomain.CurrentDomain.BaseDirectory + "\\logs";
+            if (!Directory.Exists(LLogsPath)) Directory.CreateDirectory(LLogsPath);
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -31,7 +28,7 @@ namespace CqrsDemo
                 .Enrich.FromLogContext()
                 .WriteTo.File
                 (
-                    LOgsPath + "\\log-.txt",
+                    LLogsPath + "\\log-.txt",
                     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day,
                     rollOnFileSizeLimit: true,
@@ -55,9 +52,6 @@ namespace CqrsDemo
             {
                 Log.CloseAndFlush();
             }
-
         }
-
     }
-
 }

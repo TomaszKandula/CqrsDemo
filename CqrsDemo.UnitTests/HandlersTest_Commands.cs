@@ -13,17 +13,14 @@ using CqrsDemo.Handlers.Commands.Models;
 
 namespace CqrsDemo.UnitTests
 {
-
     public class HandlersTest_Commands
     {
-
         private readonly Mock<MainDbContext> LMockDbContext;
         private readonly FakeAuthentication FAuthentication;
         private readonly FakeCommands FCommands;
 
         public HandlersTest_Commands() 
         {
-
             // Create mock instances
             LMockDbContext = new Mock<MainDbContext>();
 
@@ -40,13 +37,11 @@ namespace CqrsDemo.UnitTests
             // Create fake services
             FAuthentication = new FakeAuthentication();
             FCommands = new FakeCommands();
-
         }
 
         [Fact]
         public async Task Should_CreateParking()
         {
-
             // Arrange
             var LHandleCreateParking = new HandleCreateParking(LMockDbContext.Object, FCommands);
             var LCommand = new CreateParking
@@ -61,13 +56,11 @@ namespace CqrsDemo.UnitTests
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
-
         }
 
         [Fact]
         public async Task Should_OpenParking()
         {
-
             // Arrange
             var LHandleOpenParking = new HandleOpenParking(LMockDbContext.Object, FCommands);
             var LCommand = new OpenParking
@@ -81,13 +74,11 @@ namespace CqrsDemo.UnitTests
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
-
         }
 
         [Fact]
         public async Task Should_CloseParking()
         {
-
             // Arrange
             var LHandleCloseParking = new HandleCloseParking(LMockDbContext.Object, FCommands);
             var LCommand = new CloseParking
@@ -101,14 +92,12 @@ namespace CqrsDemo.UnitTests
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
-
         }
 
         [Theory]
         [InlineData("Parking-786359", 3)]
         public async Task Should_TakeParkingPlace(string ParkingName, int PlaceNumber)
         {
-
             // Arrange
             var LHandleTakeParkingPlace = new HandleTakeParkingPlace(LMockDbContext.Object, FCommands, FAuthentication);
             var LCommand = new TakeParkingPlace
@@ -123,14 +112,12 @@ namespace CqrsDemo.UnitTests
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
-
         }
 
         [Theory]
         [InlineData("Parking-786359", 4)]
         public async Task Should_LeaveParkingPlace(string ParkingName, int PlaceNumber)
         {
-
             // Arrange
             var LHandleLeaveParkingPlace = new HandleLeaveParkingPlace(LMockDbContext.Object, FCommands);
             var LCommand = new LeaveParkingPlace
@@ -145,9 +132,6 @@ namespace CqrsDemo.UnitTests
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
             LResult.IsSucceeded.Should().BeTrue();
-
         }
-
     }
-
 }

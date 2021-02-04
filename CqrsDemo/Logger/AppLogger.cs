@@ -1,11 +1,9 @@
 using Serilog;
 
-namespace CqrsDemo.AppLogger
+namespace CqrsDemo.Logger
 {
-
     public sealed class AppLogger : IAppLogger
     {
-
         public void LogDebug(string AMessage)
         {
             Log.Debug(AMessage);
@@ -30,7 +28,5 @@ namespace CqrsDemo.AppLogger
         {
             Log.Fatal(AMessage);
         }
-
     }
-
 }

@@ -9,10 +9,8 @@ using MediatR;
 
 namespace CqrsDemo.Handlers.Queries
 {
-
     public class HandleTotalAvailablePlaces : IRequestHandler<GetTotalAvailablePlaces, AvailablePlaceInfo>
     {
-
         private readonly MainDbContext FMainDbContext;
 
         public HandleTotalAvailablePlaces(MainDbContext AMainDbContext) 
@@ -22,7 +20,6 @@ namespace CqrsDemo.Handlers.Queries
 
         public async Task<AvailablePlaceInfo> Handle(GetTotalAvailablePlaces Request, CancellationToken CancellationToken) 
         {
-
             var LData = await FMainDbContext.ParkingPlaces
                 .Where(AParkingPlace => AParkingPlace.ParkingNameNavigation.IsOpened && AParkingPlace.IsFree)
                 .ToListAsync();
@@ -31,9 +28,6 @@ namespace CqrsDemo.Handlers.Queries
             {
                 Number = LData.Count
             };
-
         }
-
     }
-
 }

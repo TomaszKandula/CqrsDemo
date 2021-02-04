@@ -11,10 +11,8 @@ using CqrsDemo.IntegrationTests.Configuration;
 
 namespace CqrsDemo.IntegrationTests
 {
-
     public class ControllerTest_Parking : IClassFixture<TestFixture<Startup>>
     {
-
         private readonly HttpClient FHttpClient;
 
         public ControllerTest_Parking(TestFixture<Startup> ACustomFixture)
@@ -25,7 +23,6 @@ namespace CqrsDemo.IntegrationTests
         [Fact]
         public async Task Should_GetAllParkingInfos() 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/";
 
@@ -39,14 +36,12 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<IEnumerable<ParkingInfo>>(LContent);
             LDeserialized.Should().HaveCountGreaterThan(0);
-
         }
 
         [Theory]
         [InlineData("Lidl Parking")]
         public async Task Should_GetParkingInfo(string ParkingName)
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/{ParkingName}/";
 
@@ -60,13 +55,11 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<ParkingInfo>(LContent);
             LDeserialized.Name.Should().Be("Lidl Parking");
-
         }
 
         [Fact]
         public async Task Should_GetTotalAvailablePlaces()
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/availableplaces/count/";
 
@@ -80,13 +73,11 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<AvailablePlaceInfo>(LContent);
             LDeserialized.Number.Should().BeGreaterThan(0);
-
         }
 
         [Fact]
         public async Task Should_GetRandomAvailablePlace() 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/availableplaces/random/";
 
@@ -101,13 +92,11 @@ namespace CqrsDemo.IntegrationTests
             var LDeserialized = JsonConvert.DeserializeObject<ParkingPlaceInfo>(LContent);
             LDeserialized.Number.Should().NotBe(0);
             LDeserialized.ParkingName.Should().NotBeNullOrEmpty();
-
         }
 
         [Fact]
         public async Task Should_CreateParking() 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/";
 
@@ -131,14 +120,12 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
             LDeserialized.IsSucceeded.Should().BeTrue();
-
         }
 
         [Theory]
         [InlineData("BlaBlaBla")]
         public async Task Should_FailToOpenParking(string ParkingName) 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/{ParkingName}/open";
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
@@ -153,14 +140,12 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
             LDeserialized.IsSucceeded.Should().BeFalse();
-
         }
 
         [Theory]
         [InlineData("BlaBlaBla")]
         public async Task Should_FailToCloseParking(string ParkingName) 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/{ParkingName}/close";
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
@@ -175,14 +160,12 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
             LDeserialized.IsSucceeded.Should().BeFalse();
-
         }
 
         [Theory]
         [InlineData("Poznan Plaza", 1)]
         public async Task Should_FailToTakeParkingPlace(string ParkingName, int PlaceNumber) 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/{ParkingName}/{PlaceNumber}/take";
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
@@ -197,14 +180,12 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
             LDeserialized.IsSucceeded.Should().BeFalse();
-
         }
 
         [Theory]
         [InlineData("Poznan Plaza", 1)]
         public async Task Should_FailToLeaveParkingPlace(string ParkingName, int PlaceNumber) 
         {
-
             // Arrange
             var LRequest = $"/api/v1/parking/{ParkingName}/{PlaceNumber}/take";
             var LNewRequest = new HttpRequestMessage(HttpMethod.Post, LRequest);
@@ -219,9 +200,6 @@ namespace CqrsDemo.IntegrationTests
 
             var LDeserialized = JsonConvert.DeserializeObject<CommandResponse>(LContent);
             LDeserialized.IsSucceeded.Should().BeFalse();
-
         }
-
     }
-
 }
