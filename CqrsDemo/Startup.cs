@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.ResponseCompression;
 using CqrsDemo.Logger;
 using CqrsDemo.Database;
+using CqrsDemo.Exceptions;
 using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
 using CqrsDemo.Handlers.Queries.GetParkingInfo;
@@ -70,6 +71,7 @@ namespace CqrsDemo
 
         public void Configure(IApplicationBuilder AApp, IWebHostEnvironment AEnv)
         {
+            AApp.UseExceptionHandler(ExceptionHandler.Handle);
             AApp.UseResponseCompression();
             
             if (AEnv.IsDevelopment())
