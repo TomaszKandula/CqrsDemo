@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CANNOT_FIND_PARKING" xml:space="preserve">
+    <value>Cannot find parking</value>
+  </data>
+  <data name="CANNOT_FIND_PARKING_PLACE" xml:space="preserve">
+    <value>Cannot find given place in the parking</value>
+  </data>
   <data name="ERROR_UNEXPECTED" xml:space="preserve">
     <value>Unexpected error</value>
+  </data>
+  <data name="PARKING_ALREADY_CLOSED" xml:space="preserve">
+    <value>Parking is already closed</value>
+  </data>
+  <data name="PARKING_ALREADY_OPENED" xml:space="preserve">
+    <value>Parking is already opened</value>
+  </data>
+  <data name="PARKING_ALREADY_TAKEN" xml:space="preserve">
+    <value>Parking is already taken</value>
+  </data>
+  <data name="PARKING_PLACE_STILL_FREE" xml:space="preserve">
+    <value>Parking place is still free</value>
   </data>
 </root>

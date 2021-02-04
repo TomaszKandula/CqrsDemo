@@ -61,11 +61,65 @@ namespace CqrsDemo.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find parking.
+        /// </summary>
+        public static string CANNOT_FIND_PARKING {
+            get {
+                return ResourceManager.GetString("CANNOT_FIND_PARKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find given place in the parking.
+        /// </summary>
+        public static string CANNOT_FIND_PARKING_PLACE {
+            get {
+                return ResourceManager.GetString("CANNOT_FIND_PARKING_PLACE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unexpected error.
         /// </summary>
         public static string ERROR_UNEXPECTED {
             get {
                 return ResourceManager.GetString("ERROR_UNEXPECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parking is already closed.
+        /// </summary>
+        public static string PARKING_ALREADY_CLOSED {
+            get {
+                return ResourceManager.GetString("PARKING_ALREADY_CLOSED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parking is already opened.
+        /// </summary>
+        public static string PARKING_ALREADY_OPENED {
+            get {
+                return ResourceManager.GetString("PARKING_ALREADY_OPENED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parking is already taken.
+        /// </summary>
+        public static string PARKING_ALREADY_TAKEN {
+            get {
+                return ResourceManager.GetString("PARKING_ALREADY_TAKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parking place is still free.
+        /// </summary>
+        public static string PARKING_PLACE_STILL_FREE {
+            get {
+                return ResourceManager.GetString("PARKING_PLACE_STILL_FREE", resourceCulture);
             }
         }
     }

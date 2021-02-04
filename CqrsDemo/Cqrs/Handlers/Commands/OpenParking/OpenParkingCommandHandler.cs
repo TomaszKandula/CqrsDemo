@@ -1,9 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Database;
+using CqrsDemo.Exceptions;
+using CqrsDemo.Shared.Resources;
 using CqrsDemo.Services.Commands;
 using MediatR;
 
@@ -27,10 +28,10 @@ namespace CqrsDemo.Handlers.Commands.OpenParking
                 .FirstOrDefault(p => p.Name == Request.ParkingName);
 
             if (LParking == null)
-                throw new Exception($"Cannot find parking '{Request.ParkingName}'.");
+                throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
 
             if (LParking.IsOpened)
-                throw new Exception($"Parking '{Request.ParkingName}' is already opened.");
+                throw new BusinessException(nameof(ErrorCodes.PARKING_ALREADY_OPENED), ErrorCodes.PARKING_ALREADY_OPENED);
 
             LParking.IsOpened = true;
 
