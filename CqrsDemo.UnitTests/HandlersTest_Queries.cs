@@ -7,8 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using CqrsDemo.Database;
 using CqrsDemo.UnitTests.Mock;
-using CqrsDemo.Handlers.Queries;
-using CqrsDemo.Handlers.Queries.Models;
+using CqrsDemo.Handlers.Queries.GetParkingInfo;
+using CqrsDemo.Handlers.Queries.GetAllParkingInfo;
+using CqrsDemo.Handlers.Queries.GetRandomAvailablePlace;
+using CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces;
 
 namespace CqrsDemo.UnitTests
 {

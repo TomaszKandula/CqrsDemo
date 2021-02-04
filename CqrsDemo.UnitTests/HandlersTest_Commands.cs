@@ -7,9 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using CqrsDemo.Database;
 using CqrsDemo.UnitTests.Mock;
-using CqrsDemo.Handlers.Commands;
 using CqrsDemo.UnitTests.Services;
-using CqrsDemo.Handlers.Commands.Models;
+using CqrsDemo.Handlers.Commands.CreateParking;
+using CqrsDemo.Handlers.Commands.OpenParking;
+using CqrsDemo.Handlers.Commands.CloseParking;
+using CqrsDemo.Handlers.Commands.TakeParkingPlace;
+using CqrsDemo.Handlers.Commands.LeaveParkingPlace;
 
 namespace CqrsDemo.UnitTests
 {
@@ -55,7 +58,7 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
-            LResult.IsSucceeded.Should().BeTrue();
+            LResult.ToString().Should().Be("()");
         }
 
         [Fact]
@@ -73,7 +76,7 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
-            LResult.IsSucceeded.Should().BeTrue();
+            LResult.ToString().Should().Be("()");
         }
 
         [Fact]
@@ -91,7 +94,7 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
-            LResult.IsSucceeded.Should().BeTrue();
+            LResult.ToString().Should().Be("()");
         }
 
         [Theory]
@@ -111,7 +114,7 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
-            LResult.IsSucceeded.Should().BeTrue();
+            LResult.ToString().Should().Be("()");
         }
 
         [Theory]
@@ -131,7 +134,7 @@ namespace CqrsDemo.UnitTests
 
             // Assert
             LMockDbContext.Verify(AMockDbContext => AMockDbContext.SaveChangesAsync(CancellationToken.None), Times.Once);
-            LResult.IsSucceeded.Should().BeTrue();
+            LResult.ToString().Should().Be("()");
         }
     }
 }
