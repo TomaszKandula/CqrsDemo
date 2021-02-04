@@ -24,11 +24,11 @@ namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
             FAuthentication = AAuthentication;
         }
 
-        public async Task<Unit> Handle(TakeParkingPlaceCommand Request, CancellationToken CancellationToken)
+        public async Task<Unit> Handle(TakeParkingPlaceCommand ARequest, CancellationToken ACancellationToken)
         {
             var LParking = (await FMainDbContext.Parking
-                .ToListAsync())
-                .FirstOrDefault(p => p.Name == Request.ParkingName);
+                .ToListAsync(ACancellationToken))
+                .FirstOrDefault(p => p.Name == ARequest.ParkingName);
 
             if (LParking == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
@@ -37,8 +37,8 @@ namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
                 throw new BusinessException(nameof(ErrorCodes.PARKING_ALREADY_CLOSED), ErrorCodes.PARKING_ALREADY_CLOSED);
 
             var LParkingPlace = (await FMainDbContext.ParkingPlaces
-                .ToListAsync())
-                .FirstOrDefault(p => p.ParkingName == Request.ParkingName && p.Number == Request.PlaceNumber);
+                .ToListAsync(ACancellationToken))
+                .FirstOrDefault(p => p.ParkingName == ARequest.ParkingName && p.Number == ARequest.PlaceNumber);
 
             if (LParkingPlace == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING_PLACE), ErrorCodes.CANNOT_FIND_PARKING_PLACE);
@@ -49,8 +49,8 @@ namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
             LParkingPlace.IsFree = false;
             LParkingPlace.UserId = FAuthentication.GetUserId;
 
-            await FMainDbContext.SaveChangesAsync();
-            await FCommandStore.Push(Request);
+            await FMainDbContext.SaveChangesAsync(ACancellationToken);
+            await FCommandStore.Push(ARequest, ACancellationToken);
             return await Task.FromResult(Unit.Value);
         }
     }

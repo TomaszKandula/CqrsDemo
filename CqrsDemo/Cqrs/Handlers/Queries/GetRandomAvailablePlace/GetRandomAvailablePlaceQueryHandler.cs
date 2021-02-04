@@ -19,7 +19,7 @@ namespace CqrsDemo.Handlers.Queries.GetRandomAvailablePlace
             FMainDbContext = AMainDbContext;
         }
 
-        public async Task<GetRandomAvailablePlaceQueryResult> Handle(GetRandomAvailablePlaceQuery Request, CancellationToken CancellationToken) 
+        public async Task<GetRandomAvailablePlaceQueryResult> Handle(GetRandomAvailablePlaceQuery ARequest, CancellationToken ACancellationToken) 
         {
             var LRandom = new Random();
             var LRandomNext = LRandom.Next();
@@ -27,7 +27,7 @@ namespace CqrsDemo.Handlers.Queries.GetRandomAvailablePlace
             var LParkingPlace = await FMainDbContext.ParkingPlaces
                 .Include(AParkingPlace => AParkingPlace.ParkingNameNavigation.ParkingPlaces)
                 .Where(AParkingPlace => AParkingPlace.ParkingNameNavigation.IsOpened && AParkingPlace.IsFree)
-                .ToListAsync(CancellationToken);
+                .ToListAsync(ACancellationToken);
 
             var LRandomParkingPlace = LParkingPlace.OrderBy(AParkingPlace => LRandom.Next());
 

@@ -17,11 +17,11 @@ namespace CqrsDemo.Handlers.Queries.GetAllParkingInfo
             FMainDbContext = AMainDbContext;
         }
 
-        public async Task<IEnumerable<GetAllParkingInfoQueryResult>> Handle(GetAllParkingInfoQuery Request, CancellationToken CancellationToken) 
+        public async Task<IEnumerable<GetAllParkingInfoQueryResult>> Handle(GetAllParkingInfoQuery ARequest, CancellationToken ACancellationToken) 
         {
             var LParkings = await FMainDbContext.Parking
                 .Include(AParking => AParking.ParkingPlaces)
-                .ToListAsync();
+                .ToListAsync(ACancellationToken);
 
             return LParkings.Select(AParking =>
             {

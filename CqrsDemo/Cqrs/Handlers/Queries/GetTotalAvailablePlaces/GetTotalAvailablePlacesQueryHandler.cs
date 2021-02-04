@@ -16,11 +16,11 @@ namespace CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces
             FMainDbContext = AMainDbContext;
         }
 
-        public async Task<GetTotalAvailablePlacesQueryResult> Handle(GetTotalAvailablePlacesQuery Request, CancellationToken CancellationToken) 
+        public async Task<GetTotalAvailablePlacesQueryResult> Handle(GetTotalAvailablePlacesQuery ARequest, CancellationToken ACancellationToken) 
         {
             var LData = await FMainDbContext.ParkingPlaces
                 .Where(AParkingPlace => AParkingPlace.ParkingNameNavigation.IsOpened && AParkingPlace.IsFree)
-                .ToListAsync();
+                .ToListAsync(ACancellationToken);
 
             return new GetTotalAvailablePlacesQueryResult
             {
