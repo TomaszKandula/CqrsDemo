@@ -166,7 +166,7 @@ namespace CqrsDemo.IntegrationTests
         }
 
         [Theory]
-        [InlineData("Poznan Plaza", 1)]
+        [InlineData("Poznan Plaza", 100)]
         public async Task Should_FailToTakeParkingPlace(string ParkingName, int PlaceNumber) 
         {
             // Arrange
@@ -188,7 +188,7 @@ namespace CqrsDemo.IntegrationTests
         }
 
         [Theory]
-        [InlineData("Poznan Plaza", 1)]
+        [InlineData("Poznan Plaza", 999)]
         public async Task Should_FailToLeaveParkingPlace(string ParkingName, int PlaceNumber) 
         {
             // Arrange
