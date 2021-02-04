@@ -34,7 +34,7 @@ namespace CqrsDemo.IntegrationTests
             LResponse.EnsureSuccessStatusCode();
             LContent.Should().NotBeNull();
 
-            var LDeserialized = JsonConvert.DeserializeObject<IEnumerable<ParkingInfo>>(LContent);
+            var LDeserialized = JsonConvert.DeserializeObject<IEnumerable<GetAllParkingInfoQueryResult>>(LContent);
             LDeserialized.Should().HaveCountGreaterThan(0);
         }
 
@@ -53,7 +53,7 @@ namespace CqrsDemo.IntegrationTests
             LResponse.EnsureSuccessStatusCode();
             LContent.Should().NotBeNull();
 
-            var LDeserialized = JsonConvert.DeserializeObject<ParkingInfo>(LContent);
+            var LDeserialized = JsonConvert.DeserializeObject<GetAllParkingInfoQueryResult>(LContent);
             LDeserialized.Name.Should().Be("Lidl Parking");
         }
 
@@ -71,7 +71,7 @@ namespace CqrsDemo.IntegrationTests
             LResponse.EnsureSuccessStatusCode();
             LContent.Should().NotBeNull();
 
-            var LDeserialized = JsonConvert.DeserializeObject<AvailablePlaceInfo>(LContent);
+            var LDeserialized = JsonConvert.DeserializeObject<GetTotalAvailablePlacesQueryResult>(LContent);
             LDeserialized.Number.Should().BeGreaterThan(0);
         }
 
@@ -89,7 +89,7 @@ namespace CqrsDemo.IntegrationTests
             LResponse.EnsureSuccessStatusCode();
             LContent.Should().NotBeNull();
 
-            var LDeserialized = JsonConvert.DeserializeObject<ParkingPlaceInfo>(LContent);
+            var LDeserialized = JsonConvert.DeserializeObject<GetRandomAvailablePlaceQueryResult>(LContent);
             LDeserialized.Number.Should().NotBe(0);
             LDeserialized.ParkingName.Should().NotBeNullOrEmpty();
         }

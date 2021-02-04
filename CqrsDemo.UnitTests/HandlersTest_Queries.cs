@@ -37,8 +37,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_GetAllParkingInfo()
         {
             // Arrange
-            var LHandleAllParkingInfo = new HandleAllParkingInfo(FMainDbContext);
-            var LRequest = new GetAllParkingInfo();
+            var LHandleAllParkingInfo = new GetAllParkingInfoQueryHandler(FMainDbContext);
+            var LRequest = new GetAllParkingInfoQuery();
 
             // Act
             var LResult = await LHandleAllParkingInfo.Handle(LRequest, CancellationToken.None);
@@ -51,8 +51,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_GetParkingInfo()
         {
             // Arrange
-            var LHandleParkingInfo = new HandleParkingInfo(FMainDbContext);
-            var LRequest = new GetParkingInfo() 
+            var LHandleParkingInfo = new GetParkingInfoQueryHandler(FMainDbContext);
+            var LRequest = new GetParkingInfoQuery() 
             { 
                 ParkingName = "Poznan Plaza"
             };
@@ -69,8 +69,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_GetRandomAvailablePlace()
         {
             // Arrange
-            var LHandleRandomAvailablePlace = new HandleRandomAvailablePlace(FMainDbContext);
-            var LRequest = new GetRandomAvailablePlace();
+            var LHandleRandomAvailablePlace = new GetRandomAvailablePlaceQueryHandler(FMainDbContext);
+            var LRequest = new GetRandomAvailablePlaceQuery();
 
             // Act
             var LResult = await LHandleRandomAvailablePlace.Handle(LRequest, CancellationToken.None);
@@ -84,8 +84,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_GetTotalAvailablePlaces()
         {
             // Arrange
-            var LHandleTotalAvailablePlaces = new HandleTotalAvailablePlaces(FMainDbContext);
-            var LRequest = new GetTotalAvailablePlaces();
+            var LHandleTotalAvailablePlaces = new GetTotalAvailablePlacesQueryHandler(FMainDbContext);
+            var LRequest = new GetTotalAvailablePlacesQuery();
 
             // Act
             var LResult = await LHandleTotalAvailablePlaces.Handle(LRequest, CancellationToken.None);

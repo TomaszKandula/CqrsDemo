@@ -43,8 +43,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_CreateParking()
         {
             // Arrange
-            var LHandleCreateParking = new HandleCreateParking(LMockDbContext.Object, FCommands);
-            var LCommand = new CreateParking
+            var LHandleCreateParking = new CreateParkingCommandHandler(LMockDbContext.Object, FCommands);
+            var LCommand = new CreateParkingCommand
             {
                 ParkingName = "Best Parking",
                 Capacity = 1000
@@ -62,8 +62,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_OpenParking()
         {
             // Arrange
-            var LHandleOpenParking = new HandleOpenParking(LMockDbContext.Object, FCommands);
-            var LCommand = new OpenParking
+            var LHandleOpenParking = new OpenParkingCommandHandler(LMockDbContext.Object, FCommands);
+            var LCommand = new OpenParkingCommand
             {
                 ParkingName = "Poznan Plaza"
             };
@@ -80,8 +80,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_CloseParking()
         {
             // Arrange
-            var LHandleCloseParking = new HandleCloseParking(LMockDbContext.Object, FCommands);
-            var LCommand = new CloseParking
+            var LHandleCloseParking = new CloseParkingCommandHandler(LMockDbContext.Object, FCommands);
+            var LCommand = new CloseParkingCommand
             {
                 ParkingName = "Parking-786359"
             };
@@ -99,8 +99,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_TakeParkingPlace(string ParkingName, int PlaceNumber)
         {
             // Arrange
-            var LHandleTakeParkingPlace = new HandleTakeParkingPlace(LMockDbContext.Object, FCommands, FAuthentication);
-            var LCommand = new TakeParkingPlace
+            var LHandleTakeParkingPlace = new TakeParkingPlaceCommandHandler(LMockDbContext.Object, FCommands, FAuthentication);
+            var LCommand = new TakeParkingPlaceCommand
             {
                 ParkingName = ParkingName,
                 PlaceNumber = PlaceNumber
@@ -119,8 +119,8 @@ namespace CqrsDemo.UnitTests
         public async Task Should_LeaveParkingPlace(string ParkingName, int PlaceNumber)
         {
             // Arrange
-            var LHandleLeaveParkingPlace = new HandleLeaveParkingPlace(LMockDbContext.Object, FCommands);
-            var LCommand = new LeaveParkingPlace
+            var LHandleLeaveParkingPlace = new LeaveParkingPlaceCommandHandler(LMockDbContext.Object, FCommands);
+            var LCommand = new LeaveParkingPlaceCommand
             {
                 ParkingName = ParkingName,
                 PlaceNumber = PlaceNumber

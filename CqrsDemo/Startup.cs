@@ -10,13 +10,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.ResponseCompression;
 using CqrsDemo.Logger;
 using CqrsDemo.Database;
-using CqrsDemo.Models.Responses;
-using CqrsDemo.Handlers.Queries;
 using CqrsDemo.Services.Commands;
-using CqrsDemo.Handlers.Commands;
 using CqrsDemo.Services.Authentication;
-using CqrsDemo.Handlers.Queries.Models;
-using CqrsDemo.Handlers.Commands.Models;
+using CqrsDemo.Handlers.Queries.GetParkingInfo;
+using CqrsDemo.Handlers.Queries.GetAllParkingInfo;
+using CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces;
+using CqrsDemo.Handlers.Queries.GetRandomAvailablePlace;
+using CqrsDemo.Handlers.Commands.OpenParking;
+using CqrsDemo.Handlers.Commands.CloseParking;
+using CqrsDemo.Handlers.Commands.CreateParking;
+using CqrsDemo.Handlers.Commands.TakeParkingPlace;
+using CqrsDemo.Handlers.Commands.LeaveParkingPlace;
 using MediatR;
 
 namespace CqrsDemo
@@ -45,16 +49,16 @@ namespace CqrsDemo
             AServices.AddScoped<IAuthentication, Authentication>();
             AServices.AddScoped<ICommands, Commands>();
 
-            AServices.AddTransient<IRequestHandler<GetParkingInfo, ParkingInfo>, HandleParkingInfo>();
-            AServices.AddTransient<IRequestHandler<GetAllParkingInfo, IEnumerable<ParkingInfo>>, HandleAllParkingInfo>();
-            AServices.AddTransient<IRequestHandler<GetRandomAvailablePlace, ParkingPlaceInfo>, HandleRandomAvailablePlace>();
-            AServices.AddTransient<IRequestHandler<GetTotalAvailablePlaces, AvailablePlaceInfo>, HandleTotalAvailablePlaces>();
+            AServices.AddTransient<IRequestHandler<GetParkingInfoQuery, GetParkingInfoQueryResult>, GetParkingInfoQueryHandler>();
+            AServices.AddTransient<IRequestHandler<GetAllParkingInfoQuery, IEnumerable<GetAllParkingInfoQueryResult>>, GetAllParkingInfoQueryHandler>();
+            AServices.AddTransient<IRequestHandler<GetRandomAvailablePlaceQuery, GetRandomAvailablePlaceQueryResult>, GetRandomAvailablePlaceQueryHandler>();
+            AServices.AddTransient<IRequestHandler<GetTotalAvailablePlacesQuery, GetTotalAvailablePlacesQueryResult>, GetTotalAvailablePlacesQueryHandler>();
 
-            AServices.AddTransient<IRequestHandler<CloseParking, CommandResponse>, HandleCloseParking>();
-            AServices.AddTransient<IRequestHandler<CreateParking, CommandResponse>, HandleCreateParking>();
-            AServices.AddTransient<IRequestHandler<LeaveParkingPlace, CommandResponse>, HandleLeaveParkingPlace>();
-            AServices.AddTransient<IRequestHandler<OpenParking, CommandResponse>, HandleOpenParking>();
-            AServices.AddTransient<IRequestHandler<TakeParkingPlace, CommandResponse>, HandleTakeParkingPlace>();
+            AServices.AddTransient<IRequestHandler<CloseParkingCommand, Unit>, CloseParkingCommandHandler>();
+            AServices.AddTransient<IRequestHandler<CreateParkingCommand, Unit>, CreateParkingCommandHandler>();
+            AServices.AddTransient<IRequestHandler<LeaveParkingPlaceCommand, Unit>, LeaveParkingPlaceCommandHandler>();
+            AServices.AddTransient<IRequestHandler<OpenParkingCommand, Unit>, OpenParkingCommandHandler>();
+            AServices.AddTransient<IRequestHandler<TakeParkingPlaceCommand, Unit>, TakeParkingPlaceCommandHandler>();
 
             AServices.AddResponseCompression(AOptions => { AOptions.Providers.Add<GzipCompressionProvider>(); });
 
