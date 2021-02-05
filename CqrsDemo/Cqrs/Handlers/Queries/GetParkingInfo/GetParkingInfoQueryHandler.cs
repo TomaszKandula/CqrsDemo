@@ -34,9 +34,7 @@ namespace CqrsDemo.Handlers.Queries.GetParkingInfo
                 IsOpened = LParking.IsOpened,
                 MaximumPlaces = LParking.ParkingPlaces.Count,
                 AvailablePlaces = LParking.IsOpened 
-                    ? LParking.ParkingPlaces
-                        .Where(AParkingPlace => AParkingPlace.IsFree)
-                        .Count() 
+                    ? LParking.ParkingPlaces.Where(AParkingPlace => AParkingPlace.IsFree).Count() 
                     : 0
             };
         }
