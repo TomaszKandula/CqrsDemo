@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CqrsDemo.Database.Models;
+using CqrsDemo.Infrastructure.Domain.Entities;
 
 namespace CqrsDemo.UnitTests.Mock
 {

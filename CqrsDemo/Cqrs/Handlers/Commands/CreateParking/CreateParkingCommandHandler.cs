@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CqrsDemo.Database;
-using CqrsDemo.Database.Models;
 using CqrsDemo.Services.Commands;
+using CqrsDemo.Infrastructure.Database;
+using CqrsDemo.Infrastructure.Domain.Entities;
 using MediatR;
 
 namespace CqrsDemo.Handlers.Commands.CreateParking

@@ -36,5 +36,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Database\Seeders\" />
+  </ItemGroup>
+
 
 </Project>

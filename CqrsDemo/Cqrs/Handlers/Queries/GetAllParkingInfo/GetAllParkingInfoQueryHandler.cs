@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using CqrsDemo.Database;
+using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
 namespace CqrsDemo.Handlers.Queries.GetAllParkingInfo
