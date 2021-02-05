@@ -58,7 +58,7 @@ namespace CqrsDemo.IntegrationTests
             LContent.Should().NotBeNull();
 
             var LDeserialized = JsonConvert.DeserializeObject<GetParkingInfoQueryResult>(LContent);
-            LDeserialized.Name.Should().Be("Lidl Parking");
+            LDeserialized.Name.Should().Be(ParkingName);
         }
 
         [Fact]
