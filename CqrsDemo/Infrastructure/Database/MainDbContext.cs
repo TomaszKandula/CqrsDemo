@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Infrastructure.Domain.Entities;
+using CqrsDemo.Infrastructure.Database.Seeders;
 
 namespace CqrsDemo.Infrastructure.Database
 {
@@ -22,6 +23,10 @@ namespace CqrsDemo.Infrastructure.Database
         {
             base.OnModelCreating(AModelBuilder);
             ApplyConfiguration(AModelBuilder);
+
+            new ParkingSeeder().Seed(AModelBuilder);
+            new ParkingPlaceSeeder().Seed(AModelBuilder);
+            new CommandStoreSeeder().Seed(AModelBuilder);
         }
 
         protected void ApplyConfiguration(ModelBuilder AModelBuilder)
