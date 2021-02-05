@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Infrastructure.Domain.Entities;
 
 namespace CqrsDemo.Infrastructure.Database.Seeders
@@ -9,18 +8,15 @@ namespace CqrsDemo.Infrastructure.Database.Seeders
         public void Seed(ModelBuilder AModelBuilder)
         {
             AModelBuilder.Entity<Parking>().HasData(
-                new List<Parking>
+                new Parking
                 {
-                    new Parking
-                    {
-                        Name = "Poznan Plaza",
-                        IsOpened = false
-                    },
-                    new Parking
-                    {
-                        Name = "Parking-786359",
-                        IsOpened = true,
-                    }
+                    Name = "Poznan Plaza",
+                    IsOpened = false
+                },
+                new Parking
+                {
+                    Name = "Parking-786359",
+                    IsOpened = true,
                 }
             );
         }
