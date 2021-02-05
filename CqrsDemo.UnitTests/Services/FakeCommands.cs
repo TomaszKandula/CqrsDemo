@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading;
+using System.Threading.Tasks;
 using CqrsDemo.Services.Commands;
 
 namespace CqrsDemo.UnitTests.Services
@@ -9,7 +10,7 @@ namespace CqrsDemo.UnitTests.Services
         { 
         }
 
-        public override async Task Push(object ACommand)
+        public override async Task Push(object ACommand, CancellationToken ACancellationToken)
         {
             await Task.Run(() => { /* do nothing */ });
         }
