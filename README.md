@@ -99,20 +99,17 @@ public class GetAllParkingInfoQueryHandler : IRequestHandler<GetAllParkingInfoQu
             .Include(AParking => AParking.ParkingPlaces)
             .ToListAsync(ACancellationToken);
 
-        return LParkings.Select(AParking =>
+        var LSelection = LParkings.Select(AParking => new GetAllParkingInfoQueryResult
         {
-            return new GetAllParkingInfoQueryResult
-            {
-                Name = AParking.Name,
-                IsOpened = AParking.IsOpened,
-                MaximumPlaces = AParking.ParkingPlaces.Count,
-                AvailablePlaces = AParking.IsOpened 
-                    ? AParking.ParkingPlaces
-                        .Where(AParkingPlace => AParkingPlace.IsFree)
-                        .Count() 
-                    : 0
-            };
+            Name = AParking.Name,
+            IsOpened = AParking.IsOpened,
+            MaximumPlaces = AParking.ParkingPlaces.Count,
+            AvailablePlaces = AParking.IsOpened
+                ? AParking.ParkingPlaces.Where(AParkingPlace => AParkingPlace.IsFree).Count()
+                : 0
         });
+
+        return LSelection;
     }
 }
 ```
