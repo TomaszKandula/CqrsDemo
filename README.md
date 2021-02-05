@@ -44,11 +44,17 @@ For testing, local SQL server/database is used, connection string have to be set
 }
 ```
 
-In Package Manager Console (PMC) type and execute command:
+Go to Package Manager Console (PMC) to execute following command:
 
 `Update-Database -StartupProject CqrsDemo -Project CqrsDemo -Context MainDbContext`
 
-And EF Core will create database with all necessary tables with seeded test data. More on migrations here: [Infrastructure](https://github.com/TomaszKandula/CqrsDemo/tree/master/CqrsDemo/Infrastructure).
+EF Core will create all the necessary tables and will seed test data. More on migrations here: [Infrastructure](https://github.com/TomaszKandula/CqrsDemo/tree/master/CqrsDemo/Infrastructure).
+
+Please make sure your connection string points to example database that have user with following permissions:
+
+1. db_datareader,
+1. db_datawriter,
+1. db_owner.
 
 ## Integration Tests
 
