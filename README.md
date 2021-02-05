@@ -17,7 +17,9 @@ This repositorium holds basic .NET Core application (back-end only) that complie
 
 ![cqrs](https://maindbstorage.blob.core.windows.net/tokanpages/content/drawings/cqrs_c4_model_v2.png)
 
-This example of Parking System was initially inspired by article written by David Bottiau on CQRS ([see here](https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54)). However, unlike David example, this example suppose to be a bit more robust, it uses __MediatR__ library and the unit tests and integration tests are provided, also, the application is meant to be _clone, test and run_, once the connection string to database is supplied.
+This example of Parking System was initially inspired by article written by David Bottiau on CQRS ([see here](https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54)). However, unlike David example, this example suppose to be a bit more robust, it uses __MediatR__ library, unit tests and integration tests are provided. The application is meant to be _clone, test and run_, once the connection string to database is supplied.
+
+Please notet that this demo focuses on __CQRS__ and thus it keeps simple structure (there is no split into separate services).
 
 ## Tech-stack (back-end)
 
@@ -31,7 +33,7 @@ Unit Tests and Integration Tests are provided using [XUnit](https://github.com/x
 
 ## Setting-up the database
 
-For testing, local SQL server/database is used, connection string have to be setup in __secrets.json__. Copy content from __appsettings.Development.json__ and replace __set_env__ with proper values:
+For testing, local SQL server/database is used, connection string have to be setup by replacing __set_env__ with proper value:
 
 ```
 {
@@ -44,9 +46,9 @@ For testing, local SQL server/database is used, connection string have to be set
 
 In Package Manager Console (PMC) type and execute command:
 
-`update-database`
+`Update-Database -StartupProject CqrsDemo -Project CqrsDemo -Context MainDbContext`
 
-And EF Core will create database with all necessary tables. Then, we may populate the tables with the script (on localhost).
+And EF Core will create database with all necessary tables with seeded test data. More on migrations here: [Infrastructure](https://github.com/TomaszKandula/CqrsDemo/tree/master/CqrsDemo/Infrastructure).
 
 ## Integration Tests
 
