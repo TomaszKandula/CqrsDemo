@@ -43,7 +43,7 @@ namespace CqrsDemo.IntegrationTests
         }
 
         [Theory]
-        [InlineData("Lidl Parking")]
+        [InlineData("Poznan Plaza")]
         public async Task Should_GetParkingInfo(string ParkingName)
         {
             // Arrange
