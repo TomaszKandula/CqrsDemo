@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Infrastructure.Domain.Entities;
 
@@ -9,8 +8,7 @@ namespace CqrsDemo.Infrastructure.Database.Seeders
     {
         public void Seed(ModelBuilder AModelBuilder)
         {
-            new List<CommandStore>
-            {
+            AModelBuilder.Entity<CommandStore>().HasData(
                 new CommandStore
                 {
                     Id = 1,
@@ -26,8 +24,7 @@ namespace CqrsDemo.Infrastructure.Database.Seeders
                     Data = "{\"ParkingName\":\"Parking-786359\",\"Capacity\":2}",
                     CreatedAt = DateTime.Parse("2020-12-04 20:28:03"),
                     UserId = "30fb43bf-9689-4a16-b41f-75775d11a02f"
-                }
-            };
+                });
         }
     }
 }
