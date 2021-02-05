@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CqrsDemo.Migrations
+namespace CqrsDemo.Infrastructure.Database.Migrations
 {
     public partial class NewMigration : Migration
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CqrsDemo.Database.Models
+namespace CqrsDemo.Infrastructure.Domain.Entities
 {
     public class CommandStore
     {

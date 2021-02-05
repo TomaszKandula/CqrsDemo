@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using CqrsDemo.Database;
-using CqrsDemo.Database.Models;
 using CqrsDemo.Services.Authentication;
+using CqrsDemo.Infrastructure.Database;
+using CqrsDemo.Infrastructure.Domain.Entities;
 
 namespace CqrsDemo.Services.Commands
 {

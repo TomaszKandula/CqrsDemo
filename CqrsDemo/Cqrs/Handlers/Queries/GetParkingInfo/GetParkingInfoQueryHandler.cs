@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CqrsDemo.Database;
 using CqrsDemo.Exceptions;
 using CqrsDemo.Shared.Resources;
+using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
 namespace CqrsDemo.Handlers.Queries.GetParkingInfo

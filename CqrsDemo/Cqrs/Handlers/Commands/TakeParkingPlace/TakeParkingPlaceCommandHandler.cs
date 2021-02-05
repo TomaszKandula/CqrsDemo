@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CqrsDemo.Database;
 using CqrsDemo.Exceptions;
 using CqrsDemo.Shared.Resources;
 using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
+using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
 namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
