@@ -1,5 +1,7 @@
 # CQRS pattern - basic example with MediatR
 
+This repository is an example of possible CQRS pattern implementation (with no event sourcing) that uses mediator pattern.
+
 ## Introduction
 
 CQRS stands for _Command and Query Responsibility Segregation_. Following Martin Fowler ([see here](https://martinfowler.com/bliki/CQRS.html)), this pattern was created to split application logic into commands and queries; it promotes lossely coupled architecture that offers:
