@@ -36,14 +36,14 @@ namespace CqrsDemo.Controllers
             return await FMediator.Send(LQuery);
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<GetTotalAvailablePlacesQueryResult> GetTotalAvailablePlaces()
         {
             var LQuery = new GetTotalAvailablePlacesQuery();
             return await FMediator.Send(LQuery);
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<GetRandomAvailablePlaceQueryResult> GetRandomAvailablePlace()
         {
             var LQuery = new GetRandomAvailablePlaceQuery();
@@ -57,28 +57,28 @@ namespace CqrsDemo.Controllers
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<Unit> OpenParking([FromBody] OpenParkingDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToOpenParkingCommand(PayLoad);
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<Unit> CloseParking([FromBody] CloseParkingDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToCloseParkingCommand(PayLoad);
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<Unit> TakeParkingPlace([FromBody] TakeParkingPlaceDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToTakeParkingPlaceCommand(PayLoad);
             return await FMediator.Send(LCommand);
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<Unit> LeaveParkingPlace([FromBody] LeaveParkingPlaceDto PayLoad)
         {
             var LCommand = ParkingMapper.MapToLeaveParkingPlaceCommand(PayLoad);
