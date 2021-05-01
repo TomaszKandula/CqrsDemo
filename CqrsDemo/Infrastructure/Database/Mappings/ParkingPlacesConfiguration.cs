@@ -9,15 +9,16 @@ namespace CqrsDemo.Infrastructure.Database.Mappings
         public void Configure(EntityTypeBuilder<ParkingPlace> AEntityBuilder)
         {
             AEntityBuilder
-                .HasKey(AEntity => new 
+                .HasKey(AParkingPlace => new 
                 { 
-                    AEntity.ParkingName, 
-                    AEntity.Number 
+                    AParkingPlace.ParkingName, 
+                    AParkingPlace.Number 
                 });
+            
             AEntityBuilder
-                .HasOne(d => d.ParkingNameNavigation)
-                .WithMany(p => p.ParkingPlaces)
-                .HasForeignKey(d => d.ParkingName);
+                .HasOne(AParkingPlace => AParkingPlace.ParkingNameNavigation)
+                .WithMany(AParking => AParking.ParkingPlaces)
+                .HasForeignKey(AParkingPlace => AParkingPlace.ParkingName);
         }
     }
 }
