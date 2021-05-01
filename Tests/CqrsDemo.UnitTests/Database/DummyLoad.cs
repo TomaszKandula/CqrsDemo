@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using CqrsDemo.Infrastructure.Domain.Entities;
 
-namespace CqrsDemo.UnitTests.Mock
+namespace CqrsDemo.UnitTests.Database
 {
     public static class DummyLoad
     {
-        public static List<CommandStore> GetDummyCommands() 
+        public static IEnumerable<CommandStore> GetDummyCommands() 
         {
             return new List<CommandStore>
             {
@@ -29,7 +29,7 @@ namespace CqrsDemo.UnitTests.Mock
             };
         }
 
-        public static List<Parking> GetDummyParkings() 
+        public static IEnumerable<Parking> GetDummyParkingList() 
         {
             return new List<Parking>
             {
@@ -46,7 +46,7 @@ namespace CqrsDemo.UnitTests.Mock
             };       
         }
 
-        public static List<ParkingPlace> GetDummyParkingPlaces() 
+        public static IEnumerable<ParkingPlace> GetDummyParkingPlaces() 
         {
             return new List<ParkingPlace>
             {
