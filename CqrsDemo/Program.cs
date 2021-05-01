@@ -1,23 +1,23 @@
 using System;
 using System.IO;
-using Serilog;
-using Serilog.Events;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog.Events;
+using Serilog;
 
 namespace CqrsDemo
 {
     public class Program
     {
-        public static IHostBuilder CreateHostBuilder(string[] Args) =>
-            Host.CreateDefaultBuilder(Args)
+        private static IHostBuilder CreateHostBuilder(string[] AArgs) =>
+            Host.CreateDefaultBuilder(AArgs)
                 .ConfigureWebHostDefaults(AWebBuilder =>
                 {
                     AWebBuilder.UseStartup<Startup>();
                     AWebBuilder.UseSerilog();
                 });
 
-        public static int Main(string[] Args)
+        public static int Main(string[] AArgs)
         {
             var LLogsPath = AppDomain.CurrentDomain.BaseDirectory + "\\logs";
             if (!Directory.Exists(LLogsPath)) Directory.CreateDirectory(LLogsPath);
@@ -26,6 +26,7 @@ namespace CqrsDemo
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                 .Enrich.FromLogContext()
+                .WriteTo.Console()
                 .WriteTo.File
                 (
                     LLogsPath + "\\log-.txt",
@@ -40,7 +41,7 @@ namespace CqrsDemo
             try
             {
                 Log.Information("Starting WebHost...");
-                CreateHostBuilder(Args).Build().Run();
+                CreateHostBuilder(AArgs).Build().Run();
                 return 0;
             }
             catch (Exception LException)
