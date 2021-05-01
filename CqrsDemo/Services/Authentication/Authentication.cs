@@ -4,10 +4,8 @@ namespace CqrsDemo.Services.Authentication
 {
     public class Authentication : IAuthentication
     {
-        public Authentication() 
-        {
-        }
+        public Authentication() { }
 
-        public virtual string GetUserId { get => Guid.NewGuid().ToString(); }
+        public virtual string GetUserId => Guid.NewGuid().ToString();
     }
 }

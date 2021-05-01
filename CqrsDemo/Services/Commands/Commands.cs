@@ -11,6 +11,7 @@ namespace CqrsDemo.Services.Commands
     public class Commands : ICommands
     {
         private readonly MainDbContext FMainDbContext;
+        
         private readonly IAuthentication FAuthentication;
 
         public Commands(IAuthentication AAuthentication, MainDbContext AMainDbContext) 
@@ -19,9 +20,7 @@ namespace CqrsDemo.Services.Commands
             FAuthentication = AAuthentication;
         }
 
-        public Commands()
-        {
-        }
+        public Commands() { }
 
         public virtual async Task Push(object ACommand, CancellationToken ACancellationToken = default)
         {

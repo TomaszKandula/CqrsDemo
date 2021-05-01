@@ -8,7 +8,7 @@ namespace CqrsDemo.Infrastructure.Database.Mappings
     {
         public void Configure(EntityTypeBuilder<Parking> AEntityBuilder)
         {
-            AEntityBuilder.HasKey(AEntity => AEntity.Name);
+            AEntityBuilder.HasKey(AParking => AParking.Name);
             AEntityBuilder.ToTable("Parking");
         }
     }

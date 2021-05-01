@@ -3,12 +3,13 @@
     public sealed class ApplicationError
     {
         public string ErrorMessage { get; set; }
+        
         public string ErrorCode { get; set; }
 
-        public ApplicationError(string errorCode, string errorMessage)
+        public ApplicationError(string AErrorCode, string AErrorMessage)
         {
-            ErrorCode = errorCode;
-            ErrorMessage = errorMessage;
+            ErrorCode = AErrorCode;
+            ErrorMessage = AErrorMessage;
         }
     }
 }

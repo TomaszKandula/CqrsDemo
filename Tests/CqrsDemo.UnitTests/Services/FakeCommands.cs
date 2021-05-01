@@ -6,14 +6,9 @@ namespace CqrsDemo.UnitTests.Services
 {
     public class FakeCommands : Commands
     {
-        public FakeCommands() 
-        { 
-        }
+        public FakeCommands() { }
 
-        public override async Task Push(object ACommand, CancellationToken ACancellationToken)
-        {
-            await Task.Run(() => { /* do nothing */ });
-        }
-   
+        public override async Task Push(object ACommand, CancellationToken ACancellationToken = default)
+            => await Task.Run(() => { /* do nothing */ }, ACancellationToken);
     }
 }

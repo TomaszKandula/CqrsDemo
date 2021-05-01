@@ -7,8 +7,6 @@ namespace CqrsDemo.Infrastructure.Database.Mappings
     public class CommandStoreConfiguration : IEntityTypeConfiguration<CommandStore>
     {
         public void Configure(EntityTypeBuilder<CommandStore> AEntityBuilder)
-        {
-            AEntityBuilder.ToTable("CommandStore");
-        }
+            => AEntityBuilder.ToTable("CommandStore");
     }
 }
