@@ -9,12 +9,14 @@ using CqrsDemo.Services.Authentication;
 using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
+namespace CqrsDemo.Cqrs.Handlers.Commands.TakeParkingPlace
 {
     public class TakeParkingPlaceCommandHandler : IRequestHandler<TakeParkingPlaceCommand, Unit>
     {
         private readonly MainDbContext FMainDbContext;
+        
         private readonly ICommands FCommandStore;
+        
         private readonly IAuthentication FAuthentication;
 
         public TakeParkingPlaceCommandHandler(MainDbContext AMainDbContext, ICommands ACommandStore, IAuthentication AAuthentication) 
@@ -28,7 +30,7 @@ namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
         {
             var LParking = (await FMainDbContext.Parking
                 .ToListAsync(ACancellationToken))
-                .FirstOrDefault(p => p.Name == ARequest.ParkingName);
+                .FirstOrDefault(AParking => AParking.Name == ARequest.ParkingName);
 
             if (LParking == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
@@ -38,7 +40,7 @@ namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
 
             var LParkingPlace = (await FMainDbContext.ParkingPlaces
                 .ToListAsync(ACancellationToken))
-                .FirstOrDefault(p => p.ParkingName == ARequest.ParkingName && p.Number == ARequest.PlaceNumber);
+                .FirstOrDefault(AParkingPlace => AParkingPlace.ParkingName == ARequest.ParkingName && AParkingPlace.Number == ARequest.PlaceNumber);
 
             if (LParkingPlace == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING_PLACE), ErrorCodes.CANNOT_FIND_PARKING_PLACE);

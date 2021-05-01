@@ -7,23 +7,21 @@ using CqrsDemo.Shared.Resources;
 using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Queries.GetParkingInfo
+namespace CqrsDemo.Cqrs.Handlers.Queries.GetParkingInfo
 {
     public class GetParkingInfoQueryHandler : IRequestHandler<GetParkingInfoQuery, GetParkingInfoQueryResult>
     {
         private readonly MainDbContext FMainDbContext;
 
         public GetParkingInfoQueryHandler(MainDbContext AMainDbContext) 
-        {
-            FMainDbContext = AMainDbContext;
-        }
+            => FMainDbContext = AMainDbContext;
 
         public async Task<GetParkingInfoQueryResult> Handle(GetParkingInfoQuery ARequest, CancellationToken ACancellationToken) 
         {
             var LParking = (await FMainDbContext.Parking
                 .Include(AParking => AParking.ParkingPlaces)
                 .ToListAsync(ACancellationToken))
-                .FirstOrDefault(p => p.Name == ARequest.ParkingName);
+                .FirstOrDefault(AParking => AParking.Name == ARequest.ParkingName);
 
             if (LParking == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);
@@ -34,7 +32,7 @@ namespace CqrsDemo.Handlers.Queries.GetParkingInfo
                 IsOpened = LParking.IsOpened,
                 MaximumPlaces = LParking.ParkingPlaces.Count,
                 AvailablePlaces = LParking.IsOpened 
-                    ? LParking.ParkingPlaces.Where(AParkingPlace => AParkingPlace.IsFree).Count() 
+                    ? LParking.ParkingPlaces.Count(AParkingPlace => AParkingPlace.IsFree) 
                     : 0
             };
         }

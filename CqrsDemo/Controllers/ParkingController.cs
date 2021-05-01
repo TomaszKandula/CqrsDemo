@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using CqrsDemo.Shared.Dto;
 using CqrsDemo.Cqrs.Mappers;
-using CqrsDemo.Handlers.Queries.GetParkingInfo;
-using CqrsDemo.Handlers.Queries.GetAllParkingInfo;
-using CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces;
-using CqrsDemo.Handlers.Queries.GetRandomAvailablePlace;
+using CqrsDemo.Cqrs.Handlers.Queries.GetParkingInfo;
+using CqrsDemo.Cqrs.Handlers.Queries.GetAllParkingInfo;
+using CqrsDemo.Cqrs.Handlers.Queries.GetTotalAvailablePlaces;
+using CqrsDemo.Cqrs.Handlers.Queries.GetRandomAvailablePlace;
 using MediatR;
 
 namespace CqrsDemo.Controllers
@@ -17,72 +17,42 @@ namespace CqrsDemo.Controllers
     {
         private readonly IMediator FMediator;
 
-        public ParkingController(IMediator AMediator)
-        {
-            FMediator = AMediator;
-        }
+        public ParkingController(IMediator AMediator) => FMediator = AMediator;
 
         [HttpGet]
         public async Task<IEnumerable<GetAllParkingInfoQueryResult>> GetAllParkingInfo()
-        {
-            var LQuery = new GetAllParkingInfoQuery();
-            return await FMediator.Send(LQuery);
-        }
+            => await FMediator.Send(new GetAllParkingInfoQuery());
 
         [HttpGet("{ParkingName}")]
         public async Task<GetParkingInfoQueryResult> GetParkingInfo([FromRoute] string ParkingName)
-        {
-            var LQuery = new GetParkingInfoQuery { ParkingName = ParkingName };
-            return await FMediator.Send(LQuery);
-        }
+            => await FMediator.Send(new GetParkingInfoQuery { ParkingName = ParkingName });
 
         [HttpGet]
         public async Task<GetTotalAvailablePlacesQueryResult> GetTotalAvailablePlaces()
-        {
-            var LQuery = new GetTotalAvailablePlacesQuery();
-            return await FMediator.Send(LQuery);
-        }
+            => await FMediator.Send(new GetTotalAvailablePlacesQuery());
 
         [HttpGet]
         public async Task<GetRandomAvailablePlaceQueryResult> GetRandomAvailablePlace()
-        {
-            var LQuery = new GetRandomAvailablePlaceQuery();
-            return await FMediator.Send(LQuery);
-        }
+            => await FMediator.Send(new GetRandomAvailablePlaceQuery());
 
         [HttpPost]
         public async Task<Unit> CreateParking([FromBody] CreateParkingDto PayLoad)
-        {
-            var LCommand = ParkingMapper.MapToCreateParkingCommand(PayLoad);
-            return await FMediator.Send(LCommand);
-        }
+            => await FMediator.Send(ParkingMapper.MapToCreateParkingCommand(PayLoad));
 
         [HttpPost]
         public async Task<Unit> OpenParking([FromBody] OpenParkingDto PayLoad)
-        {
-            var LCommand = ParkingMapper.MapToOpenParkingCommand(PayLoad);
-            return await FMediator.Send(LCommand);
-        }
+            => await FMediator.Send(ParkingMapper.MapToOpenParkingCommand(PayLoad));
 
         [HttpPost]
         public async Task<Unit> CloseParking([FromBody] CloseParkingDto PayLoad)
-        {
-            var LCommand = ParkingMapper.MapToCloseParkingCommand(PayLoad);
-            return await FMediator.Send(LCommand);
-        }
+            => await FMediator.Send(ParkingMapper.MapToCloseParkingCommand(PayLoad));
 
         [HttpPost]
         public async Task<Unit> TakeParkingPlace([FromBody] TakeParkingPlaceDto PayLoad)
-        {
-            var LCommand = ParkingMapper.MapToTakeParkingPlaceCommand(PayLoad);
-            return await FMediator.Send(LCommand);
-        }
+            => await FMediator.Send(ParkingMapper.MapToTakeParkingPlaceCommand(PayLoad));
 
         [HttpPost]
         public async Task<Unit> LeaveParkingPlace([FromBody] LeaveParkingPlaceDto PayLoad)
-        {
-            var LCommand = ParkingMapper.MapToLeaveParkingPlaceCommand(PayLoad);
-            return await FMediator.Send(LCommand);
-        }
+            => await FMediator.Send(ParkingMapper.MapToLeaveParkingPlaceCommand(PayLoad));
     }
 }

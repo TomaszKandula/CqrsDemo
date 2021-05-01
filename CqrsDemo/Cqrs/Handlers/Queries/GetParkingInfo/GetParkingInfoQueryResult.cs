@@ -1,4 +1,4 @@
-﻿namespace CqrsDemo.Handlers.Queries.GetParkingInfo
+﻿namespace CqrsDemo.Cqrs.Handlers.Queries.GetParkingInfo
 {
     public class GetParkingInfoQueryResult
     {

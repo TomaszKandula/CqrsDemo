@@ -1,8 +1,6 @@
 ﻿using MediatR;
 
-namespace CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces
+namespace CqrsDemo.Cqrs.Handlers.Queries.GetTotalAvailablePlaces
 {
-    public class GetTotalAvailablePlacesQuery : IRequest<GetTotalAvailablePlacesQueryResult>
-    {
-    }
+    public class GetTotalAvailablePlacesQuery : IRequest<GetTotalAvailablePlacesQueryResult> { }
 }

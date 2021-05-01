@@ -5,26 +5,26 @@ using FluentAssertions;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CqrsDemo.UnitTests.Mock;
+using CqrsDemo.UnitTests.Database;
 using CqrsDemo.Infrastructure.Database;
-using CqrsDemo.Handlers.Queries.GetParkingInfo;
-using CqrsDemo.Handlers.Queries.GetAllParkingInfo;
-using CqrsDemo.Handlers.Queries.GetRandomAvailablePlace;
-using CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces;
+using CqrsDemo.Cqrs.Handlers.Queries.GetParkingInfo;
+using CqrsDemo.Cqrs.Handlers.Queries.GetAllParkingInfo;
+using CqrsDemo.Cqrs.Handlers.Queries.GetRandomAvailablePlace;
+using CqrsDemo.Cqrs.Handlers.Queries.GetTotalAvailablePlaces;
 
 namespace CqrsDemo.UnitTests
 {
-    public class HandlersTest_Queries
+    public class HandlersTestQueries
     {
         private readonly MainDbContext FMainDbContext;
 
-        public HandlersTest_Queries() 
+        public HandlersTestQueries() 
         {
             // Create mock instance
             var LMockDbContext = new Mock<MainDbContext>();
 
             // Upload pre-fixed dummy data
-            var LParkingDbSet = DummyLoad.GetDummyParkings().AsQueryable().BuildMockDbSet();
+            var LParkingDbSet = DummyLoad.GetDummyParkingList().AsQueryable().BuildMockDbSet();
             var LParkingPlaceDbSet = DummyLoad.GetDummyParkingPlaces().AsQueryable().BuildMockDbSet();
 
             // Populate database tables with dummy data
@@ -54,7 +54,7 @@ namespace CqrsDemo.UnitTests
         {
             // Arrange
             var LHandleParkingInfo = new GetParkingInfoQueryHandler(FMainDbContext);
-            var LRequest = new GetParkingInfoQuery() 
+            var LRequest = new GetParkingInfoQuery 
             { 
                 ParkingName = "Poznan Plaza"
             };

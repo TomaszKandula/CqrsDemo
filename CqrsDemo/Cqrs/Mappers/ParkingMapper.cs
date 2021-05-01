@@ -1,54 +1,54 @@
 ﻿using CqrsDemo.Shared.Dto;
-using CqrsDemo.Handlers.Commands.OpenParking;
-using CqrsDemo.Handlers.Commands.CloseParking;
-using CqrsDemo.Handlers.Commands.CreateParking;
-using CqrsDemo.Handlers.Commands.TakeParkingPlace;
-using CqrsDemo.Handlers.Commands.LeaveParkingPlace;
+using CqrsDemo.Cqrs.Handlers.Commands.OpenParking;
+using CqrsDemo.Cqrs.Handlers.Commands.CloseParking;
+using CqrsDemo.Cqrs.Handlers.Commands.CreateParking;
+using CqrsDemo.Cqrs.Handlers.Commands.TakeParkingPlace;
+using CqrsDemo.Cqrs.Handlers.Commands.LeaveParkingPlace;
 
 namespace CqrsDemo.Cqrs.Mappers
 {
     public static class ParkingMapper
     {
-        public static OpenParkingCommand MapToOpenParkingCommand(OpenParkingDto Model) 
+        public static OpenParkingCommand MapToOpenParkingCommand(OpenParkingDto AModel) 
         {
             return new OpenParkingCommand 
             { 
-                ParkingName = Model.ParkingName    
+                ParkingName = AModel.ParkingName    
             };
         }
 
-        public static CreateParkingCommand MapToCreateParkingCommand(CreateParkingDto Model) 
+        public static CreateParkingCommand MapToCreateParkingCommand(CreateParkingDto AModel) 
         {
             return new CreateParkingCommand 
             { 
-                ParkingName = Model.ParkingName,
-                Capacity = Model.Capacity
+                ParkingName = AModel.ParkingName,
+                Capacity = AModel.Capacity
             };
         }
 
-        public static CloseParkingCommand MapToCloseParkingCommand(CloseParkingDto Model) 
+        public static CloseParkingCommand MapToCloseParkingCommand(CloseParkingDto AModel) 
         {
             return new CloseParkingCommand 
             { 
-                ParkingName = Model.ParkingName
+                ParkingName = AModel.ParkingName
             };
         }
 
-        public static LeaveParkingPlaceCommand MapToLeaveParkingPlaceCommand(LeaveParkingPlaceDto Model) 
+        public static LeaveParkingPlaceCommand MapToLeaveParkingPlaceCommand(LeaveParkingPlaceDto AModel) 
         {
             return new LeaveParkingPlaceCommand 
             { 
-                ParkingName = Model.ParkingName,
-                PlaceNumber = Model.PlaceNumber
+                ParkingName = AModel.ParkingName,
+                PlaceNumber = AModel.PlaceNumber
             };
         }
 
-        public static TakeParkingPlaceCommand MapToTakeParkingPlaceCommand(TakeParkingPlaceDto Model) 
+        public static TakeParkingPlaceCommand MapToTakeParkingPlaceCommand(TakeParkingPlaceDto AModel) 
         {
             return new TakeParkingPlaceCommand 
             { 
-                ParkingName = Model.ParkingName,
-                PlaceNumber = Model.PlaceNumber
+                ParkingName = AModel.ParkingName,
+                PlaceNumber = AModel.PlaceNumber
             };
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace CqrsDemo.Handlers.Queries.GetRandomAvailablePlace
+﻿namespace CqrsDemo.Cqrs.Handlers.Queries.GetRandomAvailablePlace
 {
     public class GetRandomAvailablePlaceQueryResult
     {

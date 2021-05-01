@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.OpenParking
+namespace CqrsDemo.Cqrs.Handlers.Commands.OpenParking
 {
     public class OpenParkingCommand : IRequest<Unit>
     {
