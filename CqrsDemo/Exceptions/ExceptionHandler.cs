@@ -21,21 +21,21 @@ namespace CqrsDemo.Exceptions
                 string LResult;
                 switch (LException)
                 {
-                    case BusinessException AException:
-                        {
-                            var LAppError = new ApplicationError(AException.ErrorCode, AException.Message);
-                            LResult = JsonConvert.SerializeObject(LAppError);
-                            AHttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                            break;
-                        }
+                    case BusinessException LBusinessException:
+                    {
+                        var LAppError = new ApplicationError(LBusinessException.ErrorCode, LBusinessException.Message);
+                        LResult = JsonConvert.SerializeObject(LAppError);
+                        AHttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    }
 
                     default:
-                        {
-                            var LAppError = new ApplicationError(nameof(ErrorCodes.ERROR_UNEXPECTED), ErrorCodes.ERROR_UNEXPECTED);
-                            LResult = JsonConvert.SerializeObject(LAppError);
-                            AHttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                            break;
-                        }
+                    {
+                        var LAppError = new ApplicationError(nameof(ErrorCodes.ERROR_UNEXPECTED), ErrorCodes.ERROR_UNEXPECTED);
+                        LResult = JsonConvert.SerializeObject(LAppError);
+                        AHttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        break;
+                    }
                 }
                 await AHttpContext.Response.WriteAsync(LResult);
             });
