@@ -4,10 +4,7 @@ namespace CqrsDemo.Infrastructure.Domain.Entities
 {
     public class Parking
     {
-        public Parking()
-        {
-            ParkingPlaces = new HashSet<ParkingPlace>();
-        }
+        public Parking() => ParkingPlaces = new HashSet<ParkingPlace>();
 
         public string Name { get; set; }
         public bool IsOpened { get; set; }

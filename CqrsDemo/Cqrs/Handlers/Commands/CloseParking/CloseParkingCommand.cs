@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.CloseParking
+namespace CqrsDemo.Cqrs.Handlers.Commands.CloseParking
 {
     public class CloseParkingCommand : IRequest<Unit>
     {

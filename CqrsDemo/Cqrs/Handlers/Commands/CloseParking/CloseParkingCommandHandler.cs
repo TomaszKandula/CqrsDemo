@@ -6,14 +6,14 @@ using CqrsDemo.Exceptions;
 using CqrsDemo.Shared.Resources;
 using CqrsDemo.Services.Commands;
 using CqrsDemo.Infrastructure.Database;
-using CqrsDemo.Infrastructure.Domain.Entities;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.CloseParking
+namespace CqrsDemo.Cqrs.Handlers.Commands.CloseParking
 {
     public class CloseParkingCommandHandler : IRequestHandler<CloseParkingCommand, Unit>
     {
         private readonly MainDbContext FMainDbContext;
+        
         private readonly ICommands FCommandStore;
 
         public CloseParkingCommandHandler(MainDbContext AMainDbContext, ICommands ACommandStore) 
@@ -26,7 +26,7 @@ namespace CqrsDemo.Handlers.Commands.CloseParking
         {
             var LParking = (await FMainDbContext.Parking
                 .ToListAsync(ACancellationToken))
-                .FirstOrDefault(Parking => Parking.Name == ARequest.ParkingName);
+                .FirstOrDefault(AParking => AParking.Name == ARequest.ParkingName);
 
             if (LParking == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);

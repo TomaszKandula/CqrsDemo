@@ -6,11 +6,12 @@ using CqrsDemo.Infrastructure.Database;
 using CqrsDemo.Infrastructure.Domain.Entities;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.CreateParking
+namespace CqrsDemo.Cqrs.Handlers.Commands.CreateParking
 {
     public class CreateParkingCommandHandler : IRequestHandler<CreateParkingCommand, Unit>
     {
         private readonly MainDbContext FMainDbContext;
+        
         private readonly ICommands FCommandStore;
 
         public CreateParkingCommandHandler(MainDbContext AMainDbContext, ICommands ACommandStore) 
@@ -22,14 +23,11 @@ namespace CqrsDemo.Handlers.Commands.CreateParking
         public async Task<Unit> Handle(CreateParkingCommand ARequest, CancellationToken ACancellationToken)
         {
             var LPlaces = Enumerable.Range(1, ARequest.Capacity)
-                .Select(ANumber =>
+                .Select(ANumber => new ParkingPlace
                 {
-                    return new ParkingPlace
-                    {
-                        ParkingName = ARequest.ParkingName,
-                        Number = ANumber,
-                        IsFree = true
-                    };
+                    ParkingName = ARequest.ParkingName,
+                    Number = ANumber,
+                    IsFree = true
                 })
                 .ToList();
 

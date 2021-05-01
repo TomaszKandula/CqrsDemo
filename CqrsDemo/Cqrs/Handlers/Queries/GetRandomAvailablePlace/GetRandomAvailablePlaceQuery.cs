@@ -1,8 +1,6 @@
 ﻿using MediatR;
 
-namespace CqrsDemo.Handlers.Queries.GetRandomAvailablePlace
+namespace CqrsDemo.Cqrs.Handlers.Queries.GetRandomAvailablePlace
 {
-    public class GetRandomAvailablePlaceQuery : IRequest<GetRandomAvailablePlaceQueryResult>
-    {
-    }
+    public class GetRandomAvailablePlaceQuery : IRequest<GetRandomAvailablePlaceQueryResult> { }
 }

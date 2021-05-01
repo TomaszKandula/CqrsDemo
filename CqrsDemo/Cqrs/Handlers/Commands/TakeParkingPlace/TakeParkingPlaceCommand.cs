@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.TakeParkingPlace
+namespace CqrsDemo.Cqrs.Handlers.Commands.TakeParkingPlace
 {
     public class TakeParkingPlaceCommand : IRequest<Unit>
     {

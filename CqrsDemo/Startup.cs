@@ -13,27 +13,25 @@ using CqrsDemo.Exceptions;
 using CqrsDemo.Services.Commands;
 using CqrsDemo.Services.Authentication;
 using CqrsDemo.Infrastructure.Database;
-using CqrsDemo.Handlers.Queries.GetParkingInfo;
-using CqrsDemo.Handlers.Queries.GetAllParkingInfo;
-using CqrsDemo.Handlers.Queries.GetTotalAvailablePlaces;
-using CqrsDemo.Handlers.Queries.GetRandomAvailablePlace;
-using CqrsDemo.Handlers.Commands.OpenParking;
-using CqrsDemo.Handlers.Commands.CloseParking;
-using CqrsDemo.Handlers.Commands.CreateParking;
-using CqrsDemo.Handlers.Commands.TakeParkingPlace;
-using CqrsDemo.Handlers.Commands.LeaveParkingPlace;
+using CqrsDemo.Cqrs.Handlers.Queries.GetParkingInfo;
+using CqrsDemo.Cqrs.Handlers.Queries.GetAllParkingInfo;
+using CqrsDemo.Cqrs.Handlers.Queries.GetTotalAvailablePlaces;
+using CqrsDemo.Cqrs.Handlers.Queries.GetRandomAvailablePlace;
+using CqrsDemo.Cqrs.Handlers.Commands.OpenParking;
+using CqrsDemo.Cqrs.Handlers.Commands.CloseParking;
+using CqrsDemo.Cqrs.Handlers.Commands.CreateParking;
+using CqrsDemo.Cqrs.Handlers.Commands.TakeParkingPlace;
+using CqrsDemo.Cqrs.Handlers.Commands.LeaveParkingPlace;
 using MediatR;
 
 namespace CqrsDemo
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public Startup(IConfiguration AConfiguration)
-        {
-            Configuration = AConfiguration;
-        }
+            => Configuration = AConfiguration;
 
         public void ConfigureServices(IServiceCollection AServices)
         {
@@ -75,22 +73,15 @@ namespace CqrsDemo
             AApp.UseResponseCompression();
             
             if (AEnv.IsDevelopment())
-            {
                 AApp.UseDeveloperExceptionPage();
-            }
 
             AApp.UseSwagger();
-            AApp.UseSwaggerUI(AOption =>
-            {
-                AOption.SwaggerEndpoint("/swagger/v1/swagger.json", "CqrsDemo Api version 1");
-            });
+            AApp.UseSwaggerUI(AOption 
+                => AOption.SwaggerEndpoint("/swagger/v1/swagger.json", "CqrsDemo Api version 1"));
             
             AApp.UseHttpsRedirection();
             AApp.UseRouting();
-            AApp.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            AApp.UseEndpoints(AEndpoints => AEndpoints.MapControllers());
         }
     }
 }

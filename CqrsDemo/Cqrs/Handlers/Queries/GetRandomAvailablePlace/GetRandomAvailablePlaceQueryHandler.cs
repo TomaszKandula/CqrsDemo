@@ -8,21 +8,18 @@ using CqrsDemo.Shared.Resources;
 using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Queries.GetRandomAvailablePlace
+namespace CqrsDemo.Cqrs.Handlers.Queries.GetRandomAvailablePlace
 {
     public class GetRandomAvailablePlaceQueryHandler : IRequestHandler<GetRandomAvailablePlaceQuery, GetRandomAvailablePlaceQueryResult>
     {
         private readonly MainDbContext FMainDbContext;
 
         public GetRandomAvailablePlaceQueryHandler(MainDbContext AMainDbContext) 
-        {
-            FMainDbContext = AMainDbContext;
-        }
+            => FMainDbContext = AMainDbContext;
 
         public async Task<GetRandomAvailablePlaceQueryResult> Handle(GetRandomAvailablePlaceQuery ARequest, CancellationToken ACancellationToken) 
         {
             var LRandom = new Random();
-            var LRandomNext = LRandom.Next();
 
             var LParkingPlace = await FMainDbContext.ParkingPlaces
                 .Include(AParkingPlace => AParkingPlace.ParkingNameNavigation.ParkingPlaces)
@@ -32,9 +29,7 @@ namespace CqrsDemo.Handlers.Queries.GetRandomAvailablePlace
             var LRandomParkingPlace = LParkingPlace.OrderBy(AParkingPlace => LRandom.Next());
 
             if (!LRandomParkingPlace.Any()) 
-            {
                 throw new BusinessException(nameof(ErrorCodes.ERROR_UNEXPECTED), ErrorCodes.ERROR_UNEXPECTED);
-            }
 
             return new GetRandomAvailablePlaceQueryResult
             {

@@ -8,11 +8,12 @@ using CqrsDemo.Services.Commands;
 using CqrsDemo.Infrastructure.Database;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Commands.OpenParking
+namespace CqrsDemo.Cqrs.Handlers.Commands.OpenParking
 {
     public class OpenParkingCommandHandler : IRequestHandler<OpenParkingCommand, Unit>
     {
         private readonly MainDbContext FMainDbContext;
+        
         private readonly ICommands FCommandStore;
 
         public OpenParkingCommandHandler(MainDbContext AMainDbContext, ICommands ACommandStore) 
@@ -25,7 +26,7 @@ namespace CqrsDemo.Handlers.Commands.OpenParking
         {
             var LParking = (await FMainDbContext.Parking
                 .ToListAsync(ACancellationToken))
-                .FirstOrDefault(p => p.Name == ARequest.ParkingName);
+                .FirstOrDefault(AParking => AParking.Name == ARequest.ParkingName);
 
             if (LParking == null)
                 throw new BusinessException(nameof(ErrorCodes.CANNOT_FIND_PARKING), ErrorCodes.CANNOT_FIND_PARKING);

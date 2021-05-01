@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using CqrsDemo.Infrastructure.Domain.Entities;
 
 namespace CqrsDemo.Infrastructure.Database.Seeders
@@ -6,8 +7,12 @@ namespace CqrsDemo.Infrastructure.Database.Seeders
     public class ParkingPlaceSeeder : IMainDbContextSeeder
     {
         public void Seed(ModelBuilder AModelBuilder)
+            => AModelBuilder.Entity<ParkingPlace>().HasData(CreateParkingPlaceList());
+
+        private static IEnumerable<ParkingPlace> CreateParkingPlaceList()
         {
-            AModelBuilder.Entity<ParkingPlace>().HasData(
+            return new List<ParkingPlace>
+            {
                 new ParkingPlace
                 {
                     ParkingName = "Poznan Plaza",
@@ -35,7 +40,8 @@ namespace CqrsDemo.Infrastructure.Database.Seeders
                     Number = 4,
                     IsFree = false,
                     UserId = null
-                });
+                }
+            };
         }
     }
 }

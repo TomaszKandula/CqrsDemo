@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using MediatR;
 
-namespace CqrsDemo.Handlers.Queries.GetAllParkingInfo
+namespace CqrsDemo.Cqrs.Handlers.Queries.GetAllParkingInfo
 {
-    public class GetAllParkingInfoQuery : IRequest<IEnumerable<GetAllParkingInfoQueryResult>>
-    {
-    }
+    public class GetAllParkingInfoQuery : IRequest<IEnumerable<GetAllParkingInfoQueryResult>> { }
 }
