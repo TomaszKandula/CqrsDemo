@@ -27,10 +27,10 @@ namespace CqrsDemo.Services.Commands
             FMainDbContext.CommandStore.Add(
                 new CommandStore
                 {
-                    Type      = ACommand.GetType().Name,
-                    Data      = JsonConvert.SerializeObject(ACommand),
+                    Type = ACommand.GetType().Name,
+                    Data = JsonConvert.SerializeObject(ACommand),
                     CreatedAt = DateTime.Now,
-                    UserId    = FAuthentication.GetUserId
+                    UserId = FAuthentication.GetUserId
                 }
             );
 
