@@ -198,10 +198,10 @@ public virtual async Task Push(object ACommand, CancellationToken ACancellationT
     FMainDbContext.CommandStore.Add(
         new CommandStore
         {
-            Type      = ACommand.GetType().Name,
-            Data      = JsonConvert.SerializeObject(ACommand),
+            Type = ACommand.GetType().Name,
+            Data = JsonConvert.SerializeObject(ACommand),
             CreatedAt = DateTime.Now,
-            UserId    = FAuthentication.GetUserId
+            UserId = FAuthentication.GetUserId
         }
     );
     await FMainDbContext.SaveChangesAsync(ACancellationToken);
