@@ -17,7 +17,7 @@ It is most suitable for large complex systems.
 
 This repository holds a basic .NET Core application (back-end only) that complies with the below diagram (without SPA). Please note that it does not have event sourcing, but it uses [mediator pattern](https://refactoring.guru/design-patterns/mediator).
 
-![cqrs](https://maindbstorage.blob.core.windows.net/tokanpages/content/drawings/cqrs_c4_model_v2.png)
+![cqrs](https://maindbstorage.blob.core.windows.net/tokanpages/content/drawings/cqrs_c4_model_v2.svg)
 
 This example of a Parking System was initially inspired by an article written by David Bottiau on CQRS ([see here](https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54)). However, unlike David example, this example supposes to be a bit more robust; it uses __MediatR__ library, unit tests and integration tests are provided. The application is meant to be _clone, test and run_, once the connection string to a database is supplied.
 
